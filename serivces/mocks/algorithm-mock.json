@@ -1,0 +1,44 @@
+{
+    "author": "0x8D60843A8B19c97375d1d67da1AC9049dDd807DC",
+    "name": "Exploration for weekends",
+    "description": "Content of your choosing for weekend, select area of interests that you want to explore",
+    "mdhash": "hashstring",
+    "md": {
+        "interface": {
+            "input": [
+                {
+                    "type": "string[]",
+                    "description": "list of interets"
+                }
+            ],
+            "parameters": {
+                "weekStartsOn": {
+                    "type": "string",
+                    "acceptedValues": [
+                        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+                    ],
+                    "description": "the beginning of a week"
+                },
+                "weekEndsOn": {
+                    "type": "string",
+                    "acceptedValues": [
+                        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+                    ],
+                    "description": "the beginning of a week"
+                },
+                "interests": {
+                    "type": "string[]",
+                    "description": "List of topics you are interested in"
+                }
+            },
+            "output": [
+                {
+                    "type": "string[]",
+                    "description": "List of posts"
+                }
+            ]
+        },
+        "algoURL": "string",
+        "version": "1.0"
+    }
+}
