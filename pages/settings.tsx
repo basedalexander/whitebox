@@ -16,8 +16,10 @@ export default function Settings() {
   return (
     <div className="pt-20">
       <div> {/* Div Feed  */}
+      <h1>Teste</h1>
       </div>
       <div> {/* Div  Connection */}
+      <h1>Teste 2</h1>
       </div>
       <div> {/* Div Parameters  */}
       </div>
