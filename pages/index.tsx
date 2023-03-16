@@ -96,7 +96,7 @@ export default function Home() {
       <div className="flex flex-col justify-center items-center ">
       <input
         type="text"
-        placeholder="Digite algo aqui"
+        placeholder="Digite algo aqui!"
         className="border-teal-700 bg-gray-300 w-96 rounded"
         style={{ paddingLeft: '10px', paddingRight: '20px' }}
       />
