@@ -4,6 +4,7 @@
     "description": "Content of your choosing for weekend, select area of interests that you want to explore",
     "mdhash": "hashstring",
     "md": {
+        "instruction": "do this to that",
         "interface": {
             "input": [
                 {
@@ -38,7 +39,7 @@
                 }
             ]
         },
-        "algoURL": "string",
-        "version": "1.0"
+        "version": "1.0",
+        "algoURL": "string"
     }
 }
