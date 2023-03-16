@@ -4,7 +4,7 @@ const { deepCopy } = require('./utils/utils');
 const algoCodeMock = require('./mocks/algo-code-mock');
 const { IPFSService } = require('./ipfs.service');
 
-class AlgoRegistryService {
+export class AlgoRegistryService {
 
     constructor() {
         this.ipfs = new IPFSService();
