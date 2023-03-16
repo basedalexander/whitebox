@@ -50,10 +50,6 @@ export class AlgoRegistryService {
         await this.registerContract(contractObject);
     }
 
-    async registerContract(contractObject) {
-
-    }
-
     async saveJsonToIPFS(jsonStr) {
         // returns hash
         const hash = this.ipfs.storeJSON(jsonStr);
