@@ -1,9 +1,7 @@
-import { LocalStorageService } from './local-storage.service';
-
-const mockAlgorithmData = require('./mocks/algorithm-mock.json');
+import { LocalStorageService } from '../local-storage.service';
 
 // keeps algorithms, that are chosen by user and keeps parameter setting.
-export class AppliedAlgorithmsService {
+export class AppliedAlgosService {
     storageKey = 'whitebox';
 
 
@@ -21,7 +19,7 @@ export class AppliedAlgorithmsService {
 
     async getAppliedAlgos() {
         const algos = this.localStorage.retrieve(storageKey);
-        return algos;
+        return algos;1 
     }
 
     async persistAppliedAlgoParams(algoName, paramsObject) {

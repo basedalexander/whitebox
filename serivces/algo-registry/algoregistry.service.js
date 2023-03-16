@@ -1,8 +1,8 @@
 
-const mockAlgorithmData = require('./mocks/algorithm-mock.json');
-const { deepCopy } = require('./utils/utils');
-const algoCodeMock = require('./mocks/algo-code-mock');
-const { IPFSService } = require('./ipfs.service');
+const getAlgoDataMock = require('./data-moscks/get-algorithm-data-mock.json');
+const { deepCopy } = require('../utils/utils');
+const algoCodeMock = require('./data-mocks/algo-code-mock');
+const { IPFSService } = require('../ipfs.service');
 
 export class AlgoRegistryService {
 
@@ -16,14 +16,14 @@ export class AlgoRegistryService {
     }
 
     async get(name) {
-        const algoData = deepCopy(mockAlgorithmData);
+        const algoData = deepCopy(getAlgoDataMock);
         algoData.md.code = algoCodeMock;
         // gets one algorithm data by name
         return mockAlgorialgoDatahmData;
     }
 
     async getMany(names) {
-        // gets many algorithms, reuses get() method, returns array of algorithm data
+        // gets many algorithms, reusgites get() method, returns array of algorithm data
         const algo1Data = await this.get('mock');
         const algo2Data = await this.get('mock');
 
@@ -32,6 +32,11 @@ export class AlgoRegistryService {
         ]
     }
 
+    // @params
+    // name: string
+    // author: string
+    // description: string
+    // md: object
     async register(name, author, description, md) {
         const mdHash = await this.ipfs.storeJSON(JSON.stringify(md));
 
