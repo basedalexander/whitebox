@@ -1,0 +1,12 @@
+{
+    "inputData": [
+        ["interest1", "interest2"]
+    ],
+    "parameters": {
+        "weekStartsOn": "Friday",
+        "weekEndsOn": "Sunday",
+        "interests": [
+            "sport", "longevity", "mindfulness"
+        ]
+    }
+}
