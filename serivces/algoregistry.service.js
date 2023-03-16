@@ -1,30 +1,57 @@
 
-const mockAlgorithmData = require('./mocks');
+const mockAlgorithmData = require('./mocks/algorithm-mock.json');
 const { deepCopy } = require('./utils/utils');
+const algoCodeMock = require('./mocks/algo-code-mock');
+const { IPFSService } = require('./ipfs.service');
 
 class AlgoRegistryService {
+
+    constructor() {
+        this.ipfs = new IPFSService();
+    }
+
     async getAll() {
         // gets all the algorithm names that are already in the registry.
         return ['test', 'test2'];
     }
 
     async get(name) {
+        const algoData = deepCopy(mockAlgorithmData);
+        algoData.md.code = algoCodeMock;
         // gets one algorithm data by name
-        return mockAlgorithmData;
+        return mockAlgorialgoDatahmData;
     }
 
     async getMany(names) {
         // gets many algorithms, reuses get() method, returns array of algorithm data
-        const copy = deepCopy(mockAlgorithmData);
+        const algo1Data = await this.get('mock');
+        const algo2Data = await this.get('mock');
+
         return [
-            mockAlgorithmData, copy
+            algo1Data, algo2Data
         ]
     }
 
-    async register(name, author, description, algoString) {
-        // 1. Creates a new object entry using algoRegistry.sol smart contract with method "register
-        // 2. Saves json that is in "md" field into ipfs
-        // 3. Takes hash of saved file and puts it into mdHash field.
-        // 4. Calls smartContract method to create the new entry
+    async register(name, author, description, md) {
+        const mdHash = await this.ipfs.storeJSON(JSON.stringify(md));
+
+        const contractObject = {
+            name: name,
+            author: author,
+            description: description,
+            mdHash: mdHash 
+        }
+
+        await this.registerContract(contractObject);
+    }
+
+    async registerContract(contractObject) {
+
+    }
+
+    async saveJsonToIPFS(jsonStr) {
+        // returns hash
+        const hash = this.ipfs.storeJSON(jsonStr);
+        return hash;
     }
 }
