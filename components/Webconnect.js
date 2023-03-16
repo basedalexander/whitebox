@@ -59,8 +59,6 @@ const Webconnect = () => {
 
     return (
         <div>
-            <h1>Webconnect component</h1>
-
             <div>
             { /* if the user has not yet connected their wallet, show a connect button */ }
         {

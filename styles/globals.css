@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.nav-container {
+    /* display: flex; */
+    border-bottom: 1px solid #ccc;
+    display: block;
+}
+
+.menu-item {
+    /* flex-grow: 1; */
+    border: 2px solid black;
+    padding: 2px 5px;
+    border-radius: 5px;
+    float:left;
+}
+
+.connectwallet-menu-item {
+    /* flex-grow: 0; */
+    float:right;
+}
