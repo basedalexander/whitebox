@@ -40,6 +40,6 @@
             ]
         },
         "version": "1.0",
-        "algoURL": "string"
+        "code": "raw code string"
     }
 }
