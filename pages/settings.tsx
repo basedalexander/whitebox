@@ -2,10 +2,10 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import AlgoRegistryService from "../services/algo-registry/algoregistry.service";
-import { AppliedAlgosService } from "../services/applied-algos/applied-algos.service";
+
 import useStoredAlgos from "@/services/useStoredAlgos";
 import { filterBrokenAlgos } from '../services/algos-utils'
+import LocalStorageService from "@/services/local-storage.service";
 
 const parametersMock = {
   weekStartsOn: {
@@ -44,12 +44,13 @@ const parametersMock = {
 };
 
 export default function Settings() {
-  let appliedAlgosService = new AppliedAlgosService();
+  let localStorageService = new LocalStorageService();
   const [algos, setAlgos] = useState<any>([]); // array of serivces/algo-registry/data-mocks/get-algorithm-data-mock.json
   const [appliedAlgos, setAppliedAlgos] = useState<any>([]);
   const selectedAlgoName = ""; // used to identify a selected algo in the list
 
   useEffect(() => {
+    localStorageService.init();
   }, []);
 
   const storedAlgos = useStoredAlgos();
@@ -68,16 +69,13 @@ export default function Settings() {
   
 
   async function fetchAppliedAlgos() {
-    const appliedAlgos = await appliedAlgosService.getAppliedAlgos();
     console.log("appliedAlgos loaded");
     console.log(appliedAlgos);
     setAppliedAlgos(appliedAlgos);
   }
 
   async function onParamsSave() {
-    const paramsToSave = {};
-    await appliedAlgosService.addAlgo(selectedAlgoName, paramsToSave);
-    console.log("params saved");
+
   }
 
   async function onAlgoClick() {
