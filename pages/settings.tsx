@@ -45,18 +45,20 @@ const parametersMock = {
 
 export default function Settings() {
   let localStorageService = new LocalStorageService();
-  const [algos, setAlgos] = useState<any>([]); // array of serivces/algo-registry/data-mocks/get-algorithm-data-mock.json
-  const [appliedAlgos, setAppliedAlgos] = useState<any>([]);
-  const selectedAlgoName = ""; // used to identify a selected algo in the list
+
+  const [algos, setAlgos] = useState<any>([]);
+  let  selectedAlgoIndex = 0;
+  let isSelected = false;
 
   useEffect(() => {
     localStorageService.init();
   }, []);
 
   const storedAlgos = useStoredAlgos();
-  if (storedAlgos) {console.log(storedAlgos);}
+  if (storedAlgos) {
+    console.log(storedAlgos);
+  }
   
-
   const processedAlgos = useMemo(() => {
     const res = filterBrokenAlgos(storedAlgos)
     return res
@@ -66,20 +68,15 @@ export default function Settings() {
     console.log('processed algos');
     console.log(processedAlgos)
   }
-  
-
-  async function fetchAppliedAlgos() {
-    console.log("appliedAlgos loaded");
-    console.log(appliedAlgos);
-    setAppliedAlgos(appliedAlgos);
-  }
 
   async function onParamsSave() {
 
   }
 
-  async function onAlgoClick() {
-    console.log("algo click");
+  async function onAlgoClick(index) {
+    selectedAlgoIndex = index;
+    isSelected = true;
+    console.log("algo click ", index);
   }
 
   return (
@@ -94,9 +91,9 @@ export default function Settings() {
                 Feed
               </header>
               <div>
-                {algos?.map((algo) => (
-                  <div
-                    onClick={onAlgoClick}
+                {processedAlgos?.map((algo, index) => (
+                  <div key={algo.name} style={index === selectedAlgoIndex ? { color: 'blue' } : { color: 'black' }}
+                    onClick={() => onAlgoClick(index)}
                     className="ml-2 p-1 hover:text-violet-700 truncate w-min"
                   >
                     {algo.name}
@@ -123,7 +120,7 @@ export default function Settings() {
                   <div className="h-full">
                     <textarea
                       className="w-full h-96"
-                      defaultValue={JSON.stringify(parametersMock, null, 2)}
+                      defaultValue={ processedAlgos ? JSON.stringify(processedAlgos[selectedAlgoIndex].md.interface.parameters, null, 2) : '' }
                       onChange={(e) => {
                         try {
                           const value = JSON.parse(e.target.value);
@@ -151,7 +148,7 @@ export default function Settings() {
             <div className="w-full border rounded-lg overflow-hidden">
               <div className="flex flex-col">
                 <div className="bg-gray-100 p-4">
-                  <h1 className="text-lg font-bold">Exemplo de código</h1>
+                  <h1 className="text-lg font-bold">Code</h1>
                 </div>
                 <div className="flex flex-col space-y-4 p-4">
                   <div className="bg-white border rounded-lg shadow-md p-4">
@@ -161,22 +158,7 @@ export default function Settings() {
                     >
                       <pre className="whitespace-pre-wrap text-sm font-mono">
                         <code>
-                          {`import Web3 from 'web3';
-const web3 = new Web3('https://ropsten.infura.io/v3/your-project-id');
-const contractAddress = '0x123456789abcdef...';
-const abi = [{"constant":false,"inputs":[{"name":"_value","type":"uint256"}],"name":"setValue","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getValue","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}];
-const contractInstance = new web3.eth.Contract(abi, contractAddress);
-const setValue = async () => {
-  const accounts = await web3.eth.getAccounts();
-  const value = '1000';
-  await contractInstance.methods.setValue(value).send({ from: accounts[0] });
-};
-const getValue = async () => {
-  const value = await contractInstance.methods.getValue().call();
-  console.log(value);
-};
-setValue();
-getValue();`}
+                          { processedAlgos? processedAlgos[selectedAlgoIndex].md.code: "" }
                         </code>
                       </pre>
                     </div>
