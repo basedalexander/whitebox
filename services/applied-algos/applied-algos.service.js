@@ -2,7 +2,7 @@ import { deepCopy } from 'ethers/lib/utils';
 import { LocalStorageService } from '../local-storage.service';
 const appliedAlgoDataMock = require('./data-mocks/applied-algos-mock.json');
 
-// keeps algorithms, that are chosen by user and keeps parameter setting.
+// persists algorithms that user added and it's parameters in local storage
 export class AppliedAlgosService {
     // @todo store all the parameters in local storage under namespace "whitebox". Example whitebox.algoname = {weekStartsOn: "Friday", ... }
     storageKey = 'whitebox';
