@@ -11,11 +11,12 @@ export default function Settings() {
   let localStorageService = new LocalStorageService();
 
   const [algos, setAlgos] = useState<any>([]);
-  let  selectedAlgoIndex = 0;
-  let isSelected = false;
+  const [selectedAlgoIndex, setSelectedAlgoIndex] = useState<any>([]);
 
   useEffect(() => {
     localStorageService.init();
+  setSelectedAlgoIndex(0);
+
   }, []);
 
   const storedAlgos = useStoredAlgos();
@@ -37,10 +38,9 @@ export default function Settings() {
     console.log(processedAlgos[selectedAlgoIndex].md.interface.parameters);
   }
 
-  async function onAlgoClick(index) {
-    selectedAlgoIndex = index;
-    isSelected = true;
-    console.log("algo click ", index);
+  function onAlgoClick(index) {
+    setSelectedAlgoIndex(index);
+    console.log("algo click index ", index);
   }
 
   return (

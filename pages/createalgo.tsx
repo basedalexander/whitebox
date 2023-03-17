@@ -134,10 +134,10 @@ export default function Createalgo() {
 
   const saveIpfsHash = useCallback(async () => {
     console.log(newAlgoObj);
-    // const val = JSON.stringify(newAlgoObj);
-    // console.log("saving data: ", val);
-    // const { cid } = await client.add(val);
-    // return setIpfsHash(cid.toString());
+    const val = JSON.stringify(newAlgoObj);
+    console.log("saving data: ", val);
+    const { cid } = await client.add(val);
+    return setIpfsHash(cid.toString());
   }, [newAlgoObj]);
 
   const { config } = usePrepareContractWrite({
