@@ -10,7 +10,7 @@ export class LocalStorageService {
     }
   
     save(key, value) {
-      this.storage.setItem(key, JSON.stringify(value));
+      // this.storage.setItem(key, JSON.stringify(value));
     }
   
     retrieve(key) {
@@ -18,6 +18,6 @@ export class LocalStorageService {
     }
 
     remove(key) {
-        this.storage.removeItem(key);
+        // this.storage.removeItem(key);
       }
   }

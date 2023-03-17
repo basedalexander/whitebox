@@ -19,7 +19,7 @@ export default function Settings() {
 
   const [algos, setAlgos] = useState<any>([]); // array of serivces/algo-registry/data-mocks/get-algorithm-data-mock.json
   const [appliedAlgos, setAppliedAlgos] = useState<any>([]);
-  
+  const selectedAlgoName = ''; // used to identify a selected algo in the list
   
   useEffect(() => {
     fetchAlgos()
@@ -46,6 +46,13 @@ export default function Settings() {
     console.log('appliedAlgos loaded');
     console.log(appliedAlgos);
     setAppliedAlgos(appliedAlgos);
+  }
+
+  async function onParamsSave() {
+    // 1. the the whole object of parameters, transform it to save into appliedAlgoService format.
+    const paramsToSave = {};
+    await appliedAlgosService.addAlgo(selectedAlgoName, paramsToSave);
+    console.log('params saved');
   }
   
   return (
@@ -94,6 +101,7 @@ export default function Settings() {
         </div>
         <div>
           <div className="item" style={{ flexBasis: "33%" }}>
+          <button onClick={onParamsSave}>SAVE PARAMS</button>
             {" "}
             {/* Div Parameters  */}
             <div className=" w-full">
