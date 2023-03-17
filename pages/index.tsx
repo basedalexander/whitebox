@@ -8,36 +8,20 @@ import { replaceValues } from '@/services/utils/utils'
 
 
 export default function Home() {
-
-  /* create initial state to hold array of profiles */
   const [profiles, setProfiles] = useState<any>([])
   const [publications, setPublications] = useState<any>([])
-    /* using the router we can get the lens handle from the route path */
-    const handle = 'stani.lens';
-
+  const defaultHandle = 'stani.lens';
 
   useEffect(() => {
     init();
   }, [])
 
   async function init() {
-    
-    // Get applied algorithms md and parameters.
-    // 1. Get Applied algos and their parameters
-    // 2. Download only algos by name, they can be cashed in AppliedAlgos service.
-
-    // Prototype query: Get publication from all accounts that "handle" follows
-    // (OPTIONALY) get 
-
-
-    // build query
-    // 2. Build query based on the code and the parameters of the algorithms
-    // 3. Refresh the feed with that query.
     await refreshFeed();
   }
 
   async function refreshFeed() {
-      const profileData = await fetchProfile(handle);
+      const profileData = await fetchProfile(defaultHandle);
       const publications: any = await fetchPubs(profileData);
       const feedItems = publications.data.publications.items;
       setPublications(feedItems);
@@ -77,12 +61,6 @@ export default function Home() {
   }
 
   async function QueryFeed(query) {
-  //   const queryExample = async () => {
-  //     const response = await apolloClient.query({
-  //      query: gql(query),
-  //    })
-  //    console.log('Lens example data: ', response)
-  //  }
   }
 
   async function fetchPubs(profileData) {
