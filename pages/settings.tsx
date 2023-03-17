@@ -52,7 +52,7 @@ export default function Settings() {
             {/* Div Feed and Connections  */}
             <div className="ml-10 w-min">
               <header className="text-black text-xl font-bold w-min">
-                Feed
+                All feed algos available
               </header>
               <div>
                 {processedAlgos?.map((algo, index) => (
