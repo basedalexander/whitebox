@@ -55,8 +55,13 @@ export default function Createalgo() {
     console.log('params saved');
   }
 
-  async function onCreateClick() {
+  async function onRegisterClick() {
     // construct prepare algo object and register in in algoRegistryService.
+    console.log('create algo click');
+  }
+
+  async function onCodeSaveClick() {
+    console.log('code save clicked')
   }
   
   return (
@@ -86,12 +91,14 @@ export default function Createalgo() {
                 instructions: 
                 <input type="text" />
               </div>
+
+              <button onClick={onRegisterClick}>[REGISTER ALGO]</button>
             </div>
           </div>
         </div>
         <div>
           <div className="item" style={{ flexBasis: "33%" }}>
-          <button onClick={onParamsSave}>SAVE PARAMS</button>
+          <button onClick={onParamsSave}>[SAVE PARAMS]</button>
             {" "}
             {/* Div Parameters  */}
             <div className=" w-full">
@@ -118,11 +125,12 @@ export default function Createalgo() {
         {" "}
         {/* Div Code  */}
         <div className="item ml-10" style={{ width: "600px", height: "100px" }}>
+        <button onClick={onCodeSaveClick}>[SAVE CODE]</button>
           <div className="w-fit">
             <div className="w-full border rounded-lg overflow-hidden">
               <div className="flex flex-col">
                 <div className="bg-gray-100 p-4">
-                  <h1 className="text-lg font-bold">Exemplo de código</h1>
+                  <h1 className="text-lg font-bold">Code</h1>
                 </div>
                 <div className="flex flex-col space-y-4 p-4">
                   <div className="bg-white border rounded-lg shadow-md p-4">
