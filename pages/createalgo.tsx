@@ -91,7 +91,7 @@ export default function Createalgo() {
   useEffect(() => {
   }, []);
 
-  console.log(ipfsHash);
+  // console.log(ipfsHash);
 
   const saveIpfsHash = useCallback(async () => {
     const val = JSON.stringify(createdAlgoObj);

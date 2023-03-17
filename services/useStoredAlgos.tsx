@@ -3,7 +3,7 @@ import whiteboxAbi from "../services/whiteboxAbi.json";
 import useSWR from 'swr'
  
 const getAlgoMetaFromIpfs = async (cid: string) => {
-    console.log("fetching: ", cid);
+    // console.log("fetching: ", cid);
     const data = await fetch(`https://gateway.ipfs.io/ipfs/${cid}`);
     return data.json();
   };
@@ -16,7 +16,7 @@ export default () => {
         address: "0x78f71f633Ac301b5D52aEA0f60dfaAB45885821b",
         functionName: "getAuthorizedAlgos",
       });
-      console.log(authorizedAlgos);
+      // console.log(authorizedAlgos);
     
       const { data: algosDataFromIpsf } = useSWR(
         [authorizedAlgos],
@@ -27,7 +27,7 @@ export default () => {
           return algosData;
         }
       );
-      console.log(algosDataFromIpsf);
+      // console.log(algosDataFromIpsf);
 
       return algosDataFromIpsf
 }

@@ -70,15 +70,19 @@ export default function Settings() {
   }
 
   const storedAlgos = useStoredAlgos();
-  console.log(storedAlgos);
+  if (storedAlgos) {console.log(storedAlgos);}
+  
 
   const processedAlgos = useMemo(() => {
     const res = filterBrokenAlgos(storedAlgos)
     return res
   }, [storedAlgos])
 
-  console.log('processed algos');
-  console.log(processedAlgos)
+  if (processedAlgos) {
+    console.log('processed algos');
+    console.log(processedAlgos)
+  }
+  
 
   async function fetchAppliedAlgos() {
     const appliedAlgos = await appliedAlgosService.getAppliedAlgos();
