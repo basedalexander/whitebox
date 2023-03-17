@@ -3,12 +3,10 @@
 
 import { useCallback, useEffect, useState } from "react";
 import {
-  useContractRead,
   useContractWrite,
   usePrepareContractWrite,
 } from "wagmi";
 import { create } from "ipfs-http-client";
-import useSWR from "swr";
 import AlgoRegistryService from "../services/algo-registry/algoregistry.service";
 import whiteboxAbi from "../services/whiteboxAbi.json";
 
@@ -28,57 +26,52 @@ const client = create({
 });
 
 const parametersMock = {
-  author: "Alex",
-  meta: {
-    weekStartsOn: {
-      type: "string",
-      value: "Friday",
-      acceptedValues: [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday",
-      ],
-      description: "the beginning of a week",
-    },
-    weekEndsOn: {
-      type: "string",
-      value: "Sunday",
-      acceptedValues: [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday",
-      ],
-      description: "the beginning of a week",
-    },
-    interests: {
-      type: "string[]",
-      value: [],
-      description: "List of topics you are interested in",
-    },
-  },
-};
-
-// async load(cid: string): Promise<any> {
-//   const ipfsData = await this.httpService
-//       .get(`https://gateway.ipfs.io/ipfs/${cid}`).toPromise()
-//       .catch(() => this.httpService.get(`https://cloudflare-ipfs.com/ipfs/${cid}`).toPromise()
-//           .catch(() => this.httpService.get(`https://infura-ipfs.io/ipfs/${cid}`).toPromise()));
-//
-//   return ipfsData.data;
-// }
-
-const getAlgoMetaFromIpfs = async (cid: string) => {
-  console.log("fetching: ", cid);
-  const data = await fetch(`https://gateway.ipfs.io/ipfs/${cid}`);
-  return data.json();
+  "author": "0x8D60843A8B19c97375d1d67da1AC9049dDd807DC",
+  "name": "Exploration for weekends",
+  "description": "Content of your choosing for weekend, select area of interests that you want to explore",
+  "mdhash": "hashstring",
+  "md": {
+      "instruction": "do this to that",
+      "interface": {
+          "input": [
+              {
+                  "type": "string[]",
+                  "description": "list of interets"
+              }
+          ],
+          "parameters": {
+              "weekStartsOn": {
+                  "type": "string",
+                  "value": "Friday",
+                  "acceptedValues": [
+                      "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+                  ],
+                  "description": "the beginning of a week"
+              },
+              "weekEndsOn": {
+                  "type": "string",
+                  "value": "Sunday",
+                  "acceptedValues": [
+                      "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+                  ],
+                  "description": "the beginning of a week"
+              },
+              "interests": {
+                  "type": "string[]",
+                  "value": [],
+                  "description": "List of topics you are interested in"
+              }
+          },
+          "output": [
+              {
+                  "type": "string[]",
+                  "description": "List of posts"
+              }
+          ]
+      },
+      "version": "1.0",
+      "code": "raw code string"
+  }
 };
 
 export default function Createalgo() {
@@ -93,18 +86,11 @@ export default function Createalgo() {
 
   const [algos, setAlgos] = useState<any>([]); // array of serivces/algo-registry/data-mocks/get-algorithm-data-mock.json
   const [createdAlgoObj, setCreatedAlgoObj] = useState<any>(parametersMock); // serivces/algo-registry/data-mocks/get-algorithm-data-mock.json
+  const [ipfsHash, setIpfsHash] = useState("");
 
   useEffect(() => {
-    init();
   }, []);
 
-  async function init() {}
-
-  async function onParamsSave() {
-    const paramsToSave = {};
-    console.log("params saved");
-  }
-  const [ipfsHash, setIpfsHash] = useState("");
   console.log(ipfsHash);
 
   const saveIpfsHash = useCallback(async () => {
@@ -120,39 +106,8 @@ export default function Createalgo() {
     functionName: "saveAndAuthorizeAlgo",
     args: [ipfsHash],
   });
+
   const { write } = useContractWrite(config);
-
-  const {
-    data: authorizedAlgos,
-    isError,
-    isSuccess,
-    status,
-  } = useContractRead({
-    abi: whiteboxAbi,
-    address: "0x78f71f633Ac301b5D52aEA0f60dfaAB45885821b",
-    functionName: "getAuthorizedAlgos",
-  });
-  console.log(authorizedAlgos, isError, isSuccess, status);
-
-  const { data: algosDataFromIpsf } = useSWR(
-    [authorizedAlgos],
-    async ([authorizedAlgos]: [string[]]) => {
-      const algosData = await Promise.all(
-        authorizedAlgos.map(getAlgoMetaFromIpfs)
-      );
-      return algosData;
-    }
-  );
-  console.log(algosDataFromIpsf);
-
-  async function onRegisterClick() {
-    // construct prepare algo object and register in in algoRegistryService.
-    console.log("create algo click");
-  }
-
-  async function onCodeSaveClick() {
-    console.log("code save clicked");
-  }
 
   return (
     <div className="pt-20" style={{ whiteSpace: "nowrap", display: "flex" }}>
@@ -182,13 +137,11 @@ export default function Createalgo() {
                 <input type="text" />
               </div>
 
-              <button onClick={onRegisterClick}>[REGISTER ALGO]</button>
             </div>
           </div>
         </div>
         <div>
           <div className="item" style={{ flexBasis: "33%" }}>
-            <button onClick={onParamsSave}>[SAVE PARAMS]</button>{" "}
             {/* Div Parameters  */}
             <div className=" w-full">
               <div className="w-80 h-83 border rounded-lg overflow-hidden">
@@ -212,7 +165,6 @@ export default function Createalgo() {
         {" "}
         {/* Div Code  */}
         <div className="item ml-10" style={{ width: "600px", height: "100px" }}>
-          <button onClick={onCodeSaveClick}>[SAVE CODE]</button>
           <div className="w-fit">
             <div className="w-full border rounded-lg overflow-hidden">
               <div className="flex flex-col">
@@ -226,7 +178,7 @@ export default function Createalgo() {
                       style={{ maxHeight: "60vh" }}
                     >
                       <pre className="whitespace-pre-wrap text-sm font-mono">
-                        <code contentEditable={true}>
+                        <code>
                           {`import Web3 from 'web3';
 
 const web3 = new Web3('https://ropsten.infura.io/v3/your-project-id');

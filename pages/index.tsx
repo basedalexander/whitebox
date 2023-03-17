@@ -26,8 +26,8 @@ export default function Home() {
     // 1. Get Applied algos and their parameters
     // 2. Download only algos by name, they can be cashed in AppliedAlgos service.
 
-    // Prototype query
-    // 1. Get publication from all accounts that "handle" follows
+    // Prototype query: Get publication from all accounts that "handle" follows
+    // (OPTIONALY) get 
 
 
     // build query

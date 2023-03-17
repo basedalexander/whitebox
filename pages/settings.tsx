@@ -1,9 +1,11 @@
 /* app/page.tsx */
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import AlgoRegistryService from "../services/algo-registry/algoregistry.service";
 import { AppliedAlgosService } from "../services/applied-algos/applied-algos.service";
+import useStoredAlgos from "@/services/useStoredAlgos";
+import { filterBrokenAlgos } from '../services/algos-utils'
 
 const parametersMock = {
   weekStartsOn: {
@@ -42,7 +44,6 @@ const parametersMock = {
 };
 
 export default function Settings() {
-  let algoRegistryService = new AlgoRegistryService();
   let appliedAlgosService = new AppliedAlgosService();
 
   // 1. Fetch all algo names from AlgoRegistryServices.getAll()
@@ -57,8 +58,7 @@ export default function Settings() {
   const selectedAlgoName = ""; // used to identify a selected algo in the list
 
   useEffect(() => {
-    fetchAlgos();
-    fetchAppliedAlgos();
+    // fetchAppliedAlgos();
     init();
   }, []);
 
@@ -69,13 +69,17 @@ export default function Settings() {
     // display all that.
   }
 
-  async function fetchAlgos() {
-    const names = await algoRegistryService.getNames();
-    const algos = await algoRegistryService.getMany(names);
-    console.log("algos loaded");
-    console.log(algos);
-    setAlgos(algos);
-  }
+  const storedAlgos = useStoredAlgos();
+  console.log(storedAlgos);
+
+  const processedAlgos = useMemo(() => {
+    const res = filterBrokenAlgos(storedAlgos)
+    return res
+  }, [storedAlgos])
+
+  console.log('processed algos');
+  console.log(processedAlgos)
+
   async function fetchAppliedAlgos() {
     const appliedAlgos = await appliedAlgosService.getAppliedAlgos();
     console.log("appliedAlgos loaded");
@@ -108,7 +112,7 @@ export default function Settings() {
                 Feed
               </header>
               <div>
-                {algos.map((algo) => (
+                {algos?.map((algo) => (
                   <div
                     onClick={onAlgoClick}
                     className="ml-2 p-1 hover:text-violet-700 truncate w-min"
@@ -204,3 +208,4 @@ getValue();`}
     </div>
   );
 }
+
