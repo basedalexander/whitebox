@@ -7,7 +7,6 @@ import {
   usePrepareContractWrite,
 } from "wagmi";
 import { create } from "ipfs-http-client";
-import AlgoRegistryService from "../services/algo-registry/algoregistry.service";
 import whiteboxAbi from "../services/whiteboxAbi.json";
 
 const authorization =
@@ -83,12 +82,12 @@ export default function Createalgo() {
   const [newAlgoCode, setNewAlgoCode] = useState<any>(defaultAlgoObj.md.code);
   
   const newAlgoObj = useMemo(() => {
-    // setNewAlgoName(defaultAlgoObj.name);
-    // setNewAlgoDescription(defaultAlgoObj.description);
-    // setNewAlgoVersion(defaultAlgoObj.md.version);
-    // setNewAlgoInstruction(defaultAlgoObj.md.instruction);
-    // setNewAlgoParams(defaultAlgoObj.md.interface.parameters);
-    // setNewAlgoCode(defaultAlgoObj.md.code);
+    setNewAlgoName(defaultAlgoObj.name);
+    setNewAlgoDescription(defaultAlgoObj.description);
+    setNewAlgoVersion(defaultAlgoObj.md.version);
+    setNewAlgoInstruction(defaultAlgoObj.md.instruction);
+    setNewAlgoParams(defaultAlgoObj.md.interface.parameters);
+    setNewAlgoCode(defaultAlgoObj.md.code);
 
     return {
       name: newAlgoName,
@@ -125,10 +124,10 @@ export default function Createalgo() {
 
   const saveIpfsHash = useCallback(async () => {
     console.log(newAlgoObj);
-    const val = JSON.stringify(newAlgoObj);
-    console.log("saving data: ", val);
-    const { cid } = await client.add(val);
-    return setIpfsHash(cid.toString());
+    // const val = JSON.stringify(newAlgoObj);
+    // console.log("saving data: ", val);
+    // const { cid } = await client.add(val);
+    // return setIpfsHash(cid.toString());
   }, [newAlgoObj]);
 
   const { config } = usePrepareContractWrite({
