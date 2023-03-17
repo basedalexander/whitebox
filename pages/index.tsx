@@ -20,15 +20,15 @@ export default function Home() {
   }, [])
 
   async function init() {
-
+    await refreshFeed();
   }
 
   async function refreshFeed() {
-      // const profileData = await fetchProfile(handle);
-      // const publications: any = await getPublications(profileData);
-      // const feedItems = publications.data.publications.items;
-      // setPublications(feedItems);
-      // console.log('feed refreshed');
+      const profileData = await fetchProfile(handle);
+      const publications: any = await getPubs(profileData);
+      const feedItems = publications.data.publications.items;
+      setPublications(feedItems);
+      console.log('feed refreshed');
   }
 
   async function fetchProfile(handle) {
@@ -47,11 +47,15 @@ export default function Home() {
         profileData.avatarUrl = profileData.picture.original.url
       }
     }
+    
+    console.log(`profile ${handle} fetched`);
+    console.log(profileData);
+    
 
     return profileData;
   }
 
-  async function getPublications(profileData) {
+  async function getPubs(profileData) {
     try {
       const result = await client.query({
         query: getPublications,
@@ -60,9 +64,12 @@ export default function Home() {
         }
       })
 
+      console.log('publications fetched');
+      console.log(result);
+
       return result;
     } catch(e) {
-      
+      console.error(`error downloading publication for ${profileData.handle} \n ${e}`);
     }
   }
   
@@ -113,31 +120,13 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col items-center justify-cente w-2/5 mx-auto mt-10 bg-gray-400 rounded-xl ">
-        {profiles.map((profile) => (
-          <div
-            key={profile.id}
-            className="flex flex-col items-center justify-center mt-10 bg-white rounded-xl w-2/3"
-          >
-            <div className="flex items-center w-full">
-              <img
-                className="w-10 h-10 rounded-full ml-5"
-                src={profile.avatarUrl || "https://picsum.photos/200"}
-              />
-              <div className="w-full ml-5">
-                <p className="text-xl font-bold">{profile.name}</p>
-                <p className="text-base text-gray-400">{profile.bio}</p>
+      {
+            publications.map(pub => (
+              <div key={pub.id} className='shadow p-10 rounded mb-8 w-2/3'>
+                <p>{pub.metadata.content}</p>
               </div>
-            </div>
-            <Link href={`/profile/${profile.handle}`}>
-              <p className="cursor-pointer text-violet-600 text-lg font-medium text-center mt-2 mb-2">
-                {profile.handle}
-              </p>
-            </Link>
-            <p className="text-pink-600 text-sm font-medium text-center">
-              {profile.stats.totalFollowers} Followers
-            </p>
-          </div>
-        ))}
+            ))
+        }
       </div>
     </div>
   );
