@@ -112,7 +112,7 @@ export default function Createalgo() {
     }
 
     }
-  }, [newAlgoName])
+  }, [newAlgoName, newAlgoDescription, newAlgoVersion, newAlgoInstruction, newAlgoParams, newAlgoCode])
 
 
   function onParamsChangeHandler(e) {
@@ -120,7 +120,7 @@ export default function Createalgo() {
   }
 
 
-  function onCodeChangeHandler(e) {
+  function onCodeChangeHandler(e) { 
 
   }
 
