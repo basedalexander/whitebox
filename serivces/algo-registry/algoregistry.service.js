@@ -1,5 +1,5 @@
 
-const getAlgoDataMock = require('./data-moscks/get-algorithm-data-mock.json');
+const getAlgoDataMock = require('./data-mocks/get-algorithm-data-mock.json');
 const { deepCopy } = require('../utils/utils');
 const algoCodeMock = require('./data-mocks/algo-code-mock');
 const { IPFSService } = require('../ipfs.service');
