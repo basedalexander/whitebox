@@ -62,6 +62,8 @@ const defaultAlgoObj = {
   }
 }
 
+const newObj = JSON.parse(JSON.stringify(defaultAlgoObj));
+
 export default function Createalgo() {
   // 1. Fetch all algo names from AlgoRegistryServices.getAll()
   // 2. Fetch each algo by names and store them into an array "algorithms"
@@ -73,10 +75,10 @@ export default function Createalgo() {
   const [algos, setAlgos] = useState<any>([]);
   const [ipfsHash, setIpfsHash] = useState("");
 
-  const [newAlgoName, setNewAlgoName] = useState<any>('');
-  const [newAlgoDescription, setNewAlgoDescription] = useState<any>('');
-  const [newAlgoVersion, setNewAlgoVersion] = useState<any>('');
-  const [newAlgoInstruction, setNewAlgoInstruction] = useState<any>('');
+  const [newAlgoName, setNewAlgoName] = useState<any>(defaultAlgoObj.name);
+  const [newAlgoDescription, setNewAlgoDescription] = useState<any>(defaultAlgoObj.description);
+  const [newAlgoVersion, setNewAlgoVersion] = useState<any>(defaultAlgoObj.md.version);
+  const [newAlgoInstruction, setNewAlgoInstruction] = useState<any>(defaultAlgoObj.md.instruction);
   const [newAlgoParams, setNewAlgoParams] = useState<any>(defaultAlgoObj.md.interface.parameters);
   const [newAlgoCode, setNewAlgoCode] = useState<any>(defaultAlgoObj.md.code);
   
@@ -122,7 +124,7 @@ export default function Createalgo() {
   // console.log(ipfsHash);
 
   const saveIpfsHash = useCallback(async () => {
-    console.log(newAlgoObj);
+    console.log(newObj);
     // const val = JSON.stringify(newAlgoObj);
     // console.log("saving data: ", val);
     // const { cid } = await client.add(val);
@@ -135,12 +137,29 @@ export default function Createalgo() {
     functionName: "saveAndAuthorizeAlgo",
     args: [ipfsHash],
   });
+
   const { write } = useContractWrite(config);
 
-
-  const handleChange = (e) => {
-    // update new algo object with the latest update, could be done automaticaly with react?
-  };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    switch (name) {
+      case 'name':
+        setNewAlgoName(value);
+        break;
+      case 'description':
+        newObj.description = e.target.value;
+        console.log('description change', e.target.value)
+        break;
+      case 'version':
+        setNewAlgoVersion(value);
+        break;
+      case 'instruction':
+        setNewAlgoInstruction(value);
+        break;
+      default:
+        break;
+    }
+  }
 
   return (
     <div className="pt-20" style={{ whiteSpace: "nowrap", display: "flex" }}>
@@ -157,29 +176,29 @@ export default function Createalgo() {
               <hr />
               
               <div>
-                <input type="text" placeholder={defaultAlgoObj.name} onChange={(e) => setNewAlgoName(e.target.value)} />
+                <input name='name' type="text" value={defaultAlgoObj.name} onChange={handleInputChange} />
                 <p>Name</p>
               </div>
 
               <hr />
 
               <div>
-                <input type="text" placeholder={defaultAlgoObj.description} onChange={(e) => setNewAlgoDescription(e.target.value)} />
+                <input name='description' type="text" value={defaultAlgoObj.name} onChange={handleInputChange} />
                 <p>Description:</p>
               </div>
-
+{/* 
               <hr />
 
               <div>
-                <input type="text" placeholder={defaultAlgoObj.md.version} onChange={(e) => setNewAlgoVersion(e.target.value)} />
+                <input name='version' type="text" placeholder={defaultAlgoObj.md.version} onChange={handleInputChange} />
                 <p>Version:</p>
               </div>
 
               <hr />
               <div>
-                <input type="text" placeholder={defaultAlgoObj.md.instruction} onChange={(e) => setNewAlgoInstruction(e.target.value)} />
+                <input name='instruction' type="text" placeholder={defaultAlgoObj.md.instruction} onChange={handleInputChange} />
                 <p>Instruction:</p>
-              </div>
+              </div> */}
 
               <hr />
 
@@ -199,7 +218,7 @@ export default function Createalgo() {
                     className="flex-grow overflow-auto"
                     style={{ maxHeight: "60vh" }}
                   >
-                    <code>{JSON.stringify(newAlgoParams)}</code>
+                    {/* <code>{JSON.stringify(newAlgoParams)}</code> */}
                   </div>
                 </div>
               </div>
