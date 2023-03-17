@@ -57,7 +57,7 @@ const defaultAlgoObj = {
           ]
       },
       "version": "1.0",
-      "code": "{ }"
+      "code": ""
   }
 }
 
@@ -129,13 +129,7 @@ export default function Createalgo() {
 
   function onCodeChangeHandler(e) { 
     const valueStr = e.target.value;
-    let result;
-    try {
-      result = JSON.parse(valueStr);
-    } catch (e) {
-      throw new Error(`error updating code`);
-    }
-    setNewAlgoCode(result);
+    setNewAlgoCode(valueStr);
   }
 
 
@@ -243,7 +237,7 @@ export default function Createalgo() {
                       style={{ maxHeight: "60vh" }}
                     >
                       <pre className="whitespace-pre-wrap text-sm font-mono">
-                        <textarea onChange={(e) => onCodeChangeHandler(e)} className="w-full h-96" defaultValue={ newAlgoCode? JSON.stringify(newAlgoCode, null, 4): "" }>
+                        <textarea onChange={(e) => onCodeChangeHandler(e)} className="w-full h-96" defaultValue={ newAlgoCode? newAlgoCode: "" }>
                         </textarea>
                       </pre>
                     </div>
