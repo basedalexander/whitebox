@@ -163,23 +163,23 @@ export default function Createalgo() {
 
               <hr />
 
-              {/* <div>
-                <input type="text" value={newAlgoDescription} onChange={handleChange} />
+              <div>
+                <input type="text" placeholder={defaultAlgoObj.description} onChange={(e) => setNewAlgoDescription(e.target.value)} />
                 <p>Description:</p>
               </div>
 
               <hr />
 
               <div>
-                <input type="text" value={newAlgoVersion} onChange={handleChange} />
+                <input type="text" placeholder={defaultAlgoObj.md.version} onChange={(e) => setNewAlgoVersion(e.target.value)} />
                 <p>Version:</p>
               </div>
 
               <hr />
               <div>
-                <input type="text" value={newAlgoInstruction} onChange={handleChange} />
+                <input type="text" placeholder={defaultAlgoObj.md.instruction} onChange={(e) => setNewAlgoInstruction(e.target.value)} />
                 <p>Instruction:</p>
-              </div> */}
+              </div>
 
               <hr />
 
