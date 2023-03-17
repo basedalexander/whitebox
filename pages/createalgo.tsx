@@ -25,6 +25,43 @@ const client = create({
   },
 });
 
+const newAlgoObj = {
+  "author": "0x235",
+  "name": "New Algo Name",
+  "description": "New Algo Description",
+  "md": {
+      "instruction": "do this to that",
+      "interface": {
+          "input": [
+              {
+                  "type": "string[]",
+                  "description": "data time description"
+              }
+          ],
+          "parameters": {
+              "parameterA": {
+                  "type": "string",
+                  "value": "web3",
+                  "description": "the beginning of a week"
+              },
+              "parameterB": {
+                  "type": "number",
+                  "value": 1,
+                  "description": "param B description"
+              }
+          },
+          "output": [
+              {
+                  "type": "string[]",
+                  "description": "List of posts"
+              }
+          ]
+      },
+      "version": "1.0",
+      "code": "{ ... }"
+  }
+}
+
 const parametersMock = {
   "author": "0x8D60843A8B19c97375d1d67da1AC9049dDd807DC",
   "name": "Exploration for weekends",
@@ -70,7 +107,7 @@ const parametersMock = {
           ]
       },
       "version": "1.0",
-      "code": "raw code string"
+      "code": ""
   }
 };
 
@@ -106,8 +143,15 @@ export default function Createalgo() {
     functionName: "saveAndAuthorizeAlgo",
     args: [ipfsHash],
   });
-
   const { write } = useContractWrite(config);
+
+
+  const [text, setText] = useState('');
+
+  const handleChange = (e) => {
+    // update new algo object with the latest update, could be done automaticaly with react?
+  };
+
 
   return (
     <div className="pt-20" style={{ whiteSpace: "nowrap", display: "flex" }}>
@@ -118,24 +162,37 @@ export default function Createalgo() {
             {/* Div Feed and Connections  */}
             <div className="ml-10 w-min">
               <header className="text-black text-xl font-bold w-min">
-                Details
+                Details:
               </header>
+
+              <hr />
+              
               <div>
-                Name:
-                <input type="text" />
+                <input type="text" value={newAlgoObj.name} onChange={handleChange} />
+                <p>Name</p>
               </div>
+
+              <hr />
+
               <div>
-                Description:
-                <input type="text" />
+                <input type="text" value={newAlgoObj.description} onChange={handleChange} />
+                <p>Description:</p>
               </div>
+
+              <hr />
+
               <div>
-                Version:
-                <input type="text" />
+                <input type="text" value={newAlgoObj.md.version} onChange={handleChange} />
+                <p>Version:</p>
               </div>
+
+              <hr />
               <div>
-                instructions:
-                <input type="text" />
+                <input type="text" value={newAlgoObj.md.instruction} onChange={handleChange} />
+                <p>Instruction:</p>
               </div>
+
+              <hr />
 
             </div>
           </div>
@@ -153,7 +210,7 @@ export default function Createalgo() {
                     className="flex-grow overflow-auto"
                     style={{ maxHeight: "60vh" }}
                   >
-                    <code>{JSON.stringify(parametersMock)}</code>
+                    <code>{JSON.stringify(newAlgoObj.md.interface.parameters)}</code>
                   </div>
                 </div>
               </div>
@@ -179,28 +236,7 @@ export default function Createalgo() {
                     >
                       <pre className="whitespace-pre-wrap text-sm font-mono">
                         <code>
-                          {`import Web3 from 'web3';
-
-const web3 = new Web3('https://ropsten.infura.io/v3/your-project-id');
-
-const contractAddress = '0x123456789abcdef...';
-const abi = [{"constant":false,"inputs":[{"name":"_value","type":"uint256"}],"name":"setValue","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getValue","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}];
-
-const contractInstance = new web3.eth.Contract(abi, contractAddress);
-
-const setValue = async () => {
-  const accounts = await web3.eth.getAccounts();
-  const value = '1000';
-  await contractInstance.methods.setValue(value).send({ from: accounts[0] });
-};
-
-const getValue = async () => {
-  const value = await contractInstance.methods.getValue().call();
-  console.log(value);
-};
-
-setValue();
-getValue();`}
+                          {JSON.stringify(newAlgoObj.md.code)}
                         </code>
                       </pre>
                     </div>
