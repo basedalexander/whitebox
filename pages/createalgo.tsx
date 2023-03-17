@@ -115,6 +115,16 @@ export default function Createalgo() {
   }, [newAlgoName])
 
 
+  function onParamsChangeHandler(e) {
+
+  }
+
+
+  function onCodeChangeHandler(e) {
+
+  }
+
+
   useEffect(() => {
   }, []);
 
@@ -194,7 +204,7 @@ export default function Createalgo() {
                     className="flex-grow overflow-auto h-full"
                     style={{ maxHeight: "60vh" }}
                   >
-                    <textarea className="w-full h-96" defaultValue={ newAlgoParams ? JSON.stringify(newAlgoParams, null, 4):  "" }></textarea>
+                    <textarea onChange={(e) => onParamsChangeHandler(e)} className="w-full h-96" defaultValue={ newAlgoParams ? JSON.stringify(newAlgoParams, null, 4):  "" }></textarea>
                   </div>
                 </div>
               </div>
@@ -219,7 +229,7 @@ export default function Createalgo() {
                       style={{ maxHeight: "60vh" }}
                     >
                       <pre className="whitespace-pre-wrap text-sm font-mono">
-                        <textarea className="w-full h-96" defaultValue={ newAlgoCode? JSON.stringify(newAlgoCode, null, 4): "" }>
+                        <textarea onChange={(e) => onCodeChangeHandler(e)} className="w-full h-96" defaultValue={ newAlgoCode? JSON.stringify(newAlgoCode, null, 4): "" }>
                         </textarea>
                       </pre>
                     </div>
