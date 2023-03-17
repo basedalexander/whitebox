@@ -2,36 +2,47 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import AlgoRegistryService from '../services/algo-registry/algoregistry.service';
+import AlgoRegistryService from "../services/algo-registry/algoregistry.service";
 
 const parametersMock = {
-  "weekStartsOn": {
-      "type": "string",
-      "value": "Friday",
-      "acceptedValues": [
-          "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
-      ],
-      "description": "the beginning of a week"
+  weekStartsOn: {
+    type: "string",
+    value: "Friday",
+    acceptedValues: [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ],
+    description: "the beginning of a week",
   },
-  "weekEndsOn": {
-      "type": "string",
-      "value": "Sunday",
-      "acceptedValues": [
-          "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
-      ],
-      "description": "the beginning of a week"
+  weekEndsOn: {
+    type: "string",
+    value: "Sunday",
+    acceptedValues: [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ],
+    description: "the beginning of a week",
   },
-  "interests": {
-      "type": "string[]",
-      "value": [],
-      "description": "List of topics you are interested in"
-  }
+  interests: {
+    type: "string[]",
+    value: [],
+    description: "List of topics you are interested in",
+  },
 };
 
 export default function Createalgo() {
-
   let algoRegistryService = new AlgoRegistryService();
-  
+
   // 1. Fetch all algo names from AlgoRegistryServices.getAll()
   // 2. Fetch each algo by names and store them into an array "algorithms"
   // 3. Use AppliedAlgosService to get names of algorithms that were selected by user in settings
@@ -41,24 +52,22 @@ export default function Createalgo() {
 
   const [algos, setAlgos] = useState<any>([]); // array of serivces/algo-registry/data-mocks/get-algorithm-data-mock.json
   const [createdAlgoObj, setCreatedAlgoObj] = useState<any>([]); // serivces/algo-registry/data-mocks/get-algorithm-data-mock.json
-  
+
   useEffect(() => {
-    init()
+    init();
   }, []);
 
-  async function init() {
-
-  }
+  async function init() {}
 
   async function onParamsSave() {
     const paramsToSave = {};
-    console.log('params saved');
+    console.log("params saved");
   }
 
   async function onCreateClick() {
     // construct prepare algo object and register in in algoRegistryService.
   }
-  
+
   return (
     <div className="pt-20" style={{ whiteSpace: "nowrap", display: "flex" }}>
       <div style={{ display: "flex" }}>
@@ -66,33 +75,42 @@ export default function Createalgo() {
           <div className="w-1/2 p-5">
             {" "}
             {/* Div Feed and Connections  */}
-            <div className="ml-10 w-min">
-              <header className="text-black text-xl font-bold w-min">
-                Details
-              </header>
-              <div>
-                Name: 
-                <input type="text" />
+            <div className="ml-10">
+              <header className="text-black text-xl font-bold">Details</header>
+              <div className="my-4">
+                <label className="block font-medium mb-2">Name:</label>
+                <input
+                  type="text"
+                  className="w-fit px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300"
+                />
               </div>
-              <div>
-                Description: 
-                <input type="text" />
+              <div className="my-4">
+                <label className="block font-medium mb-2">Description:</label>
+                <input
+                  type="text"
+                  className="w-fit px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300"
+                />
               </div>
-              <div>
-                Version: 
-                <input type="text" />
+              <div className="my-4">
+                <label className="block font-medium mb-2">Version:</label>
+                <input
+                  type="text"
+                  className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300"
+                />
               </div>
-              <div>
-                instructions: 
-                <input type="text" />
+              <div className="my-4">
+                <label className="block font-medium mb-2">Instructions:</label>
+                <input
+                  type="text"
+                  className="w-fit px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300"
+                />
               </div>
             </div>
           </div>
         </div>
         <div>
           <div className="item" style={{ flexBasis: "33%" }}>
-          <button onClick={onParamsSave}>SAVE PARAMS</button>
-            {" "}
+            <button onClick={onParamsSave}>SAVE PARAMS</button>{" "}
             {/* Div Parameters  */}
             <div className=" w-full">
               <div className="w-80 h-83 border rounded-lg overflow-hidden">
@@ -104,9 +122,7 @@ export default function Createalgo() {
                     className="flex-grow overflow-auto"
                     style={{ maxHeight: "60vh" }}
                   >
-                    <code>
-                      {JSON.stringify(parametersMock)}
-                    </code>
+                    <code>{JSON.stringify(parametersMock)}</code>
                   </div>
                 </div>
               </div>
@@ -139,21 +155,21 @@ const web3 = new Web3('https://ropsten.infura.io/v3/your-project-id');
 const contractAddress = '0x123456789abcdef...';
 const abi = [{"constant":false,"inputs":[{"name":"_value","type":"uint256"}],"name":"setValue","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getValue","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}];
 
-const contractInstance = new web3.eth.Contract(abi, contractAddress);
+  const contractInstance = new web3.eth.Contract(abi, contractAddress);
 
-const setValue = async () => {
-  const accounts = await web3.eth.getAccounts();
-  const value = '1000';
-  await contractInstance.methods.setValue(value).send({ from: accounts[0] });
-};
+  const setValue = async () => {
+    const accounts = await web3.eth.getAccounts();
+    const value = '1000';
+    await contractInstance.methods.setValue(value).send({ from: accounts[0] });
+  };
 
-const getValue = async () => {
-  const value = await contractInstance.methods.getValue().call();
-  console.log(value);
-};
+  const getValue = async () => {
+    const value = await contractInstance.methods.getValue().call();
+    console.log(value);
+  };
 
-setValue();
-getValue();`}
+  setValue();
+  getValue();`}
                         </code>
                       </pre>
                     </div>
@@ -162,6 +178,12 @@ getValue();`}
               </div>
             </div>
           </div>
+          <button 
+          className="inline-block mt-1 mr-4 rounded-lg border-2 border-green-300 px-6 pt-2 pb-[6px] text-xs font-medium uppercase leading-normal text-green transition duration-150 ease-in-out hover:border-green-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-success-600 focus:border-success-600 focus:text-success-600 focus:outline-none focus:ring-0 active:border-success-700 active:text-success-700 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
+          onClick={onCreateClick}
+          >
+          Costructer
+          </button>
         </div>
       </div>
     </div>

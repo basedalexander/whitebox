@@ -5,42 +5,6 @@ import { useEffect, useState } from "react";
 import AlgoRegistryService from "../services/algo-registry/algoregistry.service";
 import { AppliedAlgosService } from "../services/applied-algos/applied-algos.service";
 
-const parametersMock = {
-  weekStartsOn: {
-    type: "string",
-    value: "Friday",
-    acceptedValues: [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday",
-    ],
-    description: "the beginning of a week",
-  },
-  weekEndsOn: {
-    type: "string",
-    value: "Sunday",
-    acceptedValues: [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday",
-    ],
-    description: "the beginning of a week",
-  },
-  interests: {
-    type: "string[]",
-    value: [],
-    description: "List of topics you are interested in",
-  },
-};
-
 export default function Settings() {
   let algoRegistryService = new AlgoRegistryService();
   let appliedAlgosService = new AppliedAlgosService();
@@ -52,9 +16,9 @@ export default function Settings() {
   // 5. Render list of applied algorithms
   // 6. On algo select - it should render interface into interface and code into code component
 
-  const [algos, setAlgos] = useState<any>([]); // array of serivces/algo-registry/data-mocks/get-algorithm-data-mock.json
+  const [algos, setAlgos] = useState<any>([]); // array of services/algo-registry/data-mocks/get-algorithm-data-mock.json
   const [appliedAlgos, setAppliedAlgos] = useState<any>([]);
-  const selectedAlgoName = ""; // used to identify a selected algo in the list
+  const [selectedAlgoName, setSelectedAlgoName] = useState<string>(""); // used to identify a selected algo in the list
 
   useEffect(() => {
     fetchAlgos();
@@ -63,9 +27,9 @@ export default function Settings() {
   }, []);
 
   async function init() {
-    // @todo get applied alogs and save them into appliedAlgos
+    // @todo get applied algos and save them into appliedAlgos
     // filter out algos that are not applied
-    // marge applied algo parameter values into algo.md.interface.parameters fields under field value for each param.
+    // merge applied algo parameter values into algo.md.interface.parameters fields under field value for each param.
     // display all that.
   }
 
@@ -74,8 +38,19 @@ export default function Settings() {
     const algos = await algoRegistryService.getMany(names);
     console.log("algos loaded");
     console.log(algos);
-    setAlgos(algos);
+
+    (algos[1].md.interface.parameters.weekStartsOn = [
+      "Teste 1",
+      "Teste 2",
+      "Teste 3",
+      "Teste 4",
+      "Teste 5",
+      "Teste 6",
+      "Sunday",
+    ]),
+      setAlgos(algos);
   }
+
   async function fetchAppliedAlgos() {
     const appliedAlgos = await appliedAlgosService.getAppliedAlgos();
     console.log("appliedAlgos loaded");
@@ -84,15 +59,16 @@ export default function Settings() {
   }
 
   async function onParamsSave() {
-    // 1. the the whole object of parameters, transform it to save into appliedAlgoService format.
-    const paramsToSave = {};
+    // 1. get the whole object of parameters and transform it to save into appliedAlgoService format.
+    const paramsToSave = {}; // @todo transform algo parameters to the format needed by appliedAlgoService
     await appliedAlgosService.addAlgo(selectedAlgoName, paramsToSave);
     console.log("params saved");
   }
 
-  async function onAlgoClick() {
+  async function onAlgoClick(name: string) {
     // 1. save selected algo name into variable selectedAlgoName
     // 2. Render the insides of the algo into parameters and code components
+    setSelectedAlgoName(name);
     console.log("algo click");
   }
 
@@ -108,9 +84,10 @@ export default function Settings() {
                 Feed
               </header>
               <div>
-                {algos.map((algo) => (
+                {algos.map((algo: any) => (
                   <div
-                    onClick={onAlgoClick}
+                    key={algo.name}
+                    onClick={() => onAlgoClick(algo.name)}
                     className="ml-2 p-1 hover:text-violet-700 truncate w-min"
                   >
                     {algo.name}
@@ -125,34 +102,43 @@ export default function Settings() {
         </div>
         <div>
           <div className="item" style={{ flexBasis: "33%" }}>
-
-            {" "}
             {/* Div Parameters  */}
             <div className="w-full h-100">
               <div className="w-80 h-full border rounded-lg overflow-hidden">
                 <div className="flex flex-col h-full">
                   <div className="bg-gray-100 p-4">
                     <h1 className="text-lg font-bold">Parameters</h1>
+                    <h1>{selectedAlgoName}</h1>
                   </div>
                   <div className="h-full">
-                    <textarea
-                      className="w-full h-96"
-                      defaultValue={JSON.stringify(parametersMock, null, 2)}
-                      onChange={(e) => {
-                        try {
-                          const value = JSON.parse(e.target.value);
-                          // faça algo com o valor atualizado (por exemplo, armazenar em um estado)
-                        } catch (error) {
-                          console.log("Erro ao parsear JSON: ", error);
-                        }
-                      }}
-                    />
+                    {algos.map((algo, index) => (
+                      <textarea
+                        key={index}
+                        className="w-full h-96"
+                        defaultValue={JSON.stringify(
+                          algo.md.interface.parameters,
+                          null,
+                          2
+                        )}
+                        onChange={(e) => {
+                          try {
+                            const value = JSON.parse(e.target.value);
+                            // faça algo com o valor atualizado (por exemplo, armazenar em um estado)
+                          } catch (error) {
+                            console.log("Erro ao parsear JSON: ", error);
+                          }
+                        }}
+                      />
+                    ))}
                   </div>
                 </div>
               </div>
-              <button 
-              className="inline-block mt-2 ml-5 rounded-full border-2 border-neutral-800 px-3 pt-1 pb-[3px] text-xs font-medium uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:border-neutral-800 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-neutral-800 focus:border-neutral-800 focus:text-neutral-800 focus:outline-none focus:ring-0 active:border-neutral-900 active:text-neutral-900 dark:border-neutral-900 dark:text-neutral-900 dark:hover:border-neutral-900 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10 dark:hover:text-neutral-900 dark:focus:border-neutral-900 dark:focus:text-neutral-900 dark:active:border-neutral-900 dark:active:text-neutral-900"
-              onClick={onParamsSave}>SAVE PARAMS</button>
+              <button
+                className="inline-block mt-2 ml-5 rounded-full border-2 border-neutral-800 px-3 pt-1 pb-[3px] text-xs font-medium uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:border-neutral-800 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-neutral-800 focus:border-neutral-800 focus:text-neutral-800 focus:outline-none focus:ring-0 active:border-neutral-900 active:text-neutral-900 dark:border-neutral-900 dark:text-neutral-900 dark:hover:border-neutral-900 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10 dark:hover:text-neutral-900 dark:focus:border-neutral-900 dark:focus:text-neutral-900 dark:active:border-neutral-900 dark:active:text-neutral-900"
+                onClick={onParamsSave}
+              >
+                SAVE PARAMS
+              </button>
             </div>
           </div>
         </div>
