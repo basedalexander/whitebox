@@ -45,29 +45,12 @@ const parametersMock = {
 
 export default function Settings() {
   let appliedAlgosService = new AppliedAlgosService();
-
-  // 1. Fetch all algo names from AlgoRegistryServices.getAll()
-  // 2. Fetch each algo by names and store them into an array "algorithms"
-  // 3. Use AppliedAlgosService to get names of algorithms that were selected by user in settings
-  // 4. Also use the same service to get stored parameter values.
-  // 5. Render list of applied algorithms
-  // 6. On algo select - it should render interface into interface and code into code component
-
   const [algos, setAlgos] = useState<any>([]); // array of serivces/algo-registry/data-mocks/get-algorithm-data-mock.json
   const [appliedAlgos, setAppliedAlgos] = useState<any>([]);
   const selectedAlgoName = ""; // used to identify a selected algo in the list
 
   useEffect(() => {
-    // fetchAppliedAlgos();
-    init();
   }, []);
-
-  async function init() {
-    // @todo get applied alogs and save them into appliedAlgos
-    // filter out algos that are not applied
-    // marge applied algo parameter values into algo.md.interface.parameters fields under field value for each param.
-    // display all that.
-  }
 
   const storedAlgos = useStoredAlgos();
   if (storedAlgos) {console.log(storedAlgos);}
@@ -92,15 +75,12 @@ export default function Settings() {
   }
 
   async function onParamsSave() {
-    // 1. the the whole object of parameters, transform it to save into appliedAlgoService format.
     const paramsToSave = {};
     await appliedAlgosService.addAlgo(selectedAlgoName, paramsToSave);
     console.log("params saved");
   }
 
   async function onAlgoClick() {
-    // 1. save selected algo name into variable selectedAlgoName
-    // 2. Render the insides of the algo into parameters and code components
     console.log("algo click");
   }
 
