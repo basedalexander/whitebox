@@ -1,7 +1,7 @@
 /* app/page.tsx */
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useMemo } from "react";
 import {
   useContractWrite,
   usePrepareContractWrite,
@@ -121,9 +121,26 @@ export default function Createalgo() {
   // 5. Render list of applied algorithms
   // 6. On algo select - it should render interface into interface and code into code component
 
-  const [algos, setAlgos] = useState<any>([]); // array of serivces/algo-registry/data-mocks/get-algorithm-data-mock.json
-  const [createdAlgoObj, setCreatedAlgoObj] = useState<any>(parametersMock); // serivces/algo-registry/data-mocks/get-algorithm-data-mock.json
+  const [algos, setAlgos] = useState<any>([]);
+  const [createdAlgoObj, setCreatedAlgoObj] = useState<any>(parametersMock);
   const [ipfsHash, setIpfsHash] = useState("");
+
+  const [newAlgoName, setNewAlgoName] = useState<any>([]);
+  const [newAlgoDescription, setNewAlgoDescription] = useState<any>([]);
+  const [newAlgoVersion, setNewAlgoVersion] = useState<any>([]);
+  const [newAlgoInstruction, setNewAlgoInstruction] = useState<any>([]);
+  const [newAlgoParams, setNewAlgoParams] = useState<any>([]);
+  const [newAlgoCode, setNewAlgoCode] = useState<any>([]);
+  
+  const processedAlgos = useMemo(() => {
+    setNewAlgoName(newAlgoObj.name);
+    setNewAlgoDescription(newAlgoObj.description);
+    setNewAlgoVersion(newAlgoObj.md.version);
+    setNewAlgoInstruction(newAlgoObj.md.instruction);
+    setNewAlgoParams(newAlgoObj.md.interface.parameters);
+    setNewAlgoCode(newAlgoObj.md.code);
+  }, [])
+
 
   useEffect(() => {
   }, []);
@@ -146,12 +163,9 @@ export default function Createalgo() {
   const { write } = useContractWrite(config);
 
 
-  const [text, setText] = useState('');
-
   const handleChange = (e) => {
     // update new algo object with the latest update, could be done automaticaly with react?
   };
-
 
   return (
     <div className="pt-20" style={{ whiteSpace: "nowrap", display: "flex" }}>
@@ -168,27 +182,27 @@ export default function Createalgo() {
               <hr />
               
               <div>
-                <input type="text" value={newAlgoObj.name} onChange={handleChange} />
+                <input type="text" value={newAlgoName} onChange={handleChange} />
                 <p>Name</p>
               </div>
 
               <hr />
 
               <div>
-                <input type="text" value={newAlgoObj.description} onChange={handleChange} />
+                <input type="text" value={newAlgoDescription} onChange={handleChange} />
                 <p>Description:</p>
               </div>
 
               <hr />
 
               <div>
-                <input type="text" value={newAlgoObj.md.version} onChange={handleChange} />
+                <input type="text" value={newAlgoVersion} onChange={handleChange} />
                 <p>Version:</p>
               </div>
 
               <hr />
               <div>
-                <input type="text" value={newAlgoObj.md.instruction} onChange={handleChange} />
+                <input type="text" value={newAlgoInstruction} onChange={handleChange} />
                 <p>Instruction:</p>
               </div>
 
@@ -210,7 +224,7 @@ export default function Createalgo() {
                     className="flex-grow overflow-auto"
                     style={{ maxHeight: "60vh" }}
                   >
-                    <code>{JSON.stringify(newAlgoObj.md.interface.parameters)}</code>
+                    <code>{JSON.stringify(newAlgoParams)}</code>
                   </div>
                 </div>
               </div>
@@ -236,7 +250,7 @@ export default function Createalgo() {
                     >
                       <pre className="whitespace-pre-wrap text-sm font-mono">
                         <code>
-                          {JSON.stringify(newAlgoObj.md.code)}
+                          {JSON.stringify(newAlgoCode)}
                         </code>
                       </pre>
                     </div>
