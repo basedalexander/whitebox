@@ -29,16 +29,23 @@ export default function Settings() {
 
   async function init() {
     // @todo get applied alogs and save them into appliedAlgos
+    // filter out algos that are not applied
+    // marge applied algo parameter values into algo.md.interface.parameters fields under field value for each param.
+    // display all that.
   }
 
   async function fetchAlgos() {
     const names = await algoRegistryService.getNames();
     const algos = await algoRegistryService.getMany(names);
+    console.log('algos loaded');
     console.log(algos);
     setAlgos(algos);;
   }
   async function fetchAppliedAlgos() {
-    setAppliedAlgos([]);
+    const appliedAlgos = await appliedAlgosService.getAppliedAlgos();
+    console.log('appliedAlgos loaded');
+    console.log(appliedAlgos);
+    setAppliedAlgos(appliedAlgos);
   }
   
   return (
