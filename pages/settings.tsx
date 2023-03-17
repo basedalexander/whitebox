@@ -84,7 +84,7 @@ export default function Settings() {
                   <div className="h-full">
                     <textarea
                       className="w-full h-96"
-                      defaultValue={ processedAlgos ? JSON.stringify(processedAlgos[selectedAlgoIndex].md.interface.parameters, null, 2) : '' }
+                      defaultValue={ processedAlgos ? JSON.stringify(processedAlgos[selectedAlgoIndex]?.md.interface.parameters, null, 2) : '' }
                       onChange={(e) => {
                         try {
                           const value = JSON.parse(e.target.value);
@@ -122,7 +122,7 @@ export default function Settings() {
                     >
                       <pre className="whitespace-pre-wrap text-sm font-mono">
                         <code>
-                          { processedAlgos? processedAlgos[selectedAlgoIndex].md.code: "" }
+                          { processedAlgos? processedAlgos[selectedAlgoIndex]?.md.code: "" }
                         </code>
                       </pre>
                     </div>
