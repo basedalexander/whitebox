@@ -1,6 +1,6 @@
 import { deepCopy } from 'ethers/lib/utils';
 import { LocalStorageService } from '../local-storage.service';
-const appliedAlgoDataMock = require('./data-mocks/applied-algo-mock.json');
+const appliedAlgoDataMock = require('./data-mocks/applied-algos-mock.json');
 
 // keeps algorithms, that are chosen by user and keeps parameter setting.
 export class AppliedAlgosService {

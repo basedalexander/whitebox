@@ -3,10 +3,12 @@
 
 import { useEffect, useState } from "react";
 import AlgoRegistryService from '../services/algo-registry/algoregistry.service';
+import { AppliedAlgosService } from '../services/applied-algos/applied-algos.service';
 
 export default function Settings() {
 
   let algoRegistryService = new AlgoRegistryService();
+  let appliedAlgosService = new AppliedAlgosService();
   
   // 1. Fetch all algo names from AlgoRegistryServices.getAll()
   // 2. Fetch each algo by names and store them into an array "algorithms"
@@ -32,6 +34,7 @@ export default function Settings() {
   async function fetchAlgos() {
     const names = await algoRegistryService.getNames();
     const algos = await algoRegistryService.getMany(names);
+    console.log(algos);
     setAlgos(algos);;
   }
   async function fetchAppliedAlgos() {

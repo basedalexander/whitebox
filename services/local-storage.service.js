@@ -6,7 +6,7 @@
 
 export class LocalStorageService {
     constructor() {
-      this.storage = window.localStorage;
+      // this.storage = window.localStorage;
     }
   
     save(key, value) {
