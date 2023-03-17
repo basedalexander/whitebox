@@ -25,7 +25,7 @@ const client = create({
   },
 });
 
-const newAlgoObj = {
+const defaultAlgoObj = {
   "author": "0x235",
   "name": "New Algo Name",
   "description": "New Algo Description",
@@ -62,58 +62,7 @@ const newAlgoObj = {
   }
 }
 
-const parametersMock = {
-  "author": "0x8D60843A8B19c97375d1d67da1AC9049dDd807DC",
-  "name": "Exploration for weekends",
-  "description": "Content of your choosing for weekend, select area of interests that you want to explore",
-  "mdhash": "hashstring",
-  "md": {
-      "instruction": "do this to that",
-      "interface": {
-          "input": [
-              {
-                  "type": "string[]",
-                  "description": "list of interets"
-              }
-          ],
-          "parameters": {
-              "weekStartsOn": {
-                  "type": "string",
-                  "value": "Friday",
-                  "acceptedValues": [
-                      "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
-                  ],
-                  "description": "the beginning of a week"
-              },
-              "weekEndsOn": {
-                  "type": "string",
-                  "value": "Sunday",
-                  "acceptedValues": [
-                      "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
-                  ],
-                  "description": "the beginning of a week"
-              },
-              "interests": {
-                  "type": "string[]",
-                  "value": [],
-                  "description": "List of topics you are interested in"
-              }
-          },
-          "output": [
-              {
-                  "type": "string[]",
-                  "description": "List of posts"
-              }
-          ]
-      },
-      "version": "1.0",
-      "code": ""
-  }
-};
-
 export default function Createalgo() {
-  let algoRegistryService = new AlgoRegistryService();
-
   // 1. Fetch all algo names from AlgoRegistryServices.getAll()
   // 2. Fetch each algo by names and store them into an array "algorithms"
   // 3. Use AppliedAlgosService to get names of algorithms that were selected by user in settings
@@ -122,24 +71,49 @@ export default function Createalgo() {
   // 6. On algo select - it should render interface into interface and code into code component
 
   const [algos, setAlgos] = useState<any>([]);
-  const [createdAlgoObj, setCreatedAlgoObj] = useState<any>(parametersMock);
   const [ipfsHash, setIpfsHash] = useState("");
 
-  const [newAlgoName, setNewAlgoName] = useState<any>([]);
-  const [newAlgoDescription, setNewAlgoDescription] = useState<any>([]);
-  const [newAlgoVersion, setNewAlgoVersion] = useState<any>([]);
-  const [newAlgoInstruction, setNewAlgoInstruction] = useState<any>([]);
-  const [newAlgoParams, setNewAlgoParams] = useState<any>([]);
-  const [newAlgoCode, setNewAlgoCode] = useState<any>([]);
+  const [newAlgoName, setNewAlgoName] = useState<any>('');
+  const [newAlgoDescription, setNewAlgoDescription] = useState<any>('');
+  const [newAlgoVersion, setNewAlgoVersion] = useState<any>('');
+  const [newAlgoInstruction, setNewAlgoInstruction] = useState<any>('');
+  const [newAlgoParams, setNewAlgoParams] = useState<any>(defaultAlgoObj.md.interface.parameters);
+  const [newAlgoCode, setNewAlgoCode] = useState<any>(defaultAlgoObj.md.code);
   
-  const processedAlgos = useMemo(() => {
-    setNewAlgoName(newAlgoObj.name);
-    setNewAlgoDescription(newAlgoObj.description);
-    setNewAlgoVersion(newAlgoObj.md.version);
-    setNewAlgoInstruction(newAlgoObj.md.instruction);
-    setNewAlgoParams(newAlgoObj.md.interface.parameters);
-    setNewAlgoCode(newAlgoObj.md.code);
-  }, [])
+  const newAlgoObj = useMemo(() => {
+    // setNewAlgoName(defaultAlgoObj.name);
+    // setNewAlgoDescription(defaultAlgoObj.description);
+    // setNewAlgoVersion(defaultAlgoObj.md.version);
+    // setNewAlgoInstruction(defaultAlgoObj.md.instruction);
+    // setNewAlgoParams(defaultAlgoObj.md.interface.parameters);
+    // setNewAlgoCode(defaultAlgoObj.md.code);
+
+    return {
+      name: newAlgoName,
+      description: newAlgoDescription,
+      md: {
+        "instruction": newAlgoInstruction,
+        "interface": {
+            "input": [
+                {
+                    "type": "string[]",
+                    "description": "data time description"
+                }
+            ],
+            "parameters": newAlgoParams,
+            "output": [
+                {
+                    "type": "string[]",
+                    "description": "List of posts"
+                }
+            ]
+        },
+        version: newAlgoVersion,
+        code: newAlgoCode 
+    }
+
+    }
+  }, [newAlgoName])
 
 
   useEffect(() => {
@@ -148,11 +122,12 @@ export default function Createalgo() {
   // console.log(ipfsHash);
 
   const saveIpfsHash = useCallback(async () => {
-    const val = JSON.stringify(createdAlgoObj);
-    console.log("saving data: ", val);
-    const { cid } = await client.add(val);
-    return setIpfsHash(cid.toString());
-  }, [createdAlgoObj]);
+    console.log(newAlgoObj);
+    // const val = JSON.stringify(newAlgoObj);
+    // console.log("saving data: ", val);
+    // const { cid } = await client.add(val);
+    // return setIpfsHash(cid.toString());
+  }, [newAlgoObj]);
 
   const { config } = usePrepareContractWrite({
     abi: whiteboxAbi,
@@ -182,13 +157,13 @@ export default function Createalgo() {
               <hr />
               
               <div>
-                <input type="text" value={newAlgoName} onChange={handleChange} />
+                <input type="text" placeholder={defaultAlgoObj.name} onChange={(e) => setNewAlgoName(e.target.value)} />
                 <p>Name</p>
               </div>
 
               <hr />
 
-              <div>
+              {/* <div>
                 <input type="text" value={newAlgoDescription} onChange={handleChange} />
                 <p>Description:</p>
               </div>
@@ -204,7 +179,7 @@ export default function Createalgo() {
               <div>
                 <input type="text" value={newAlgoInstruction} onChange={handleChange} />
                 <p>Instruction:</p>
-              </div>
+              </div> */}
 
               <hr />
 
@@ -249,9 +224,9 @@ export default function Createalgo() {
                       style={{ maxHeight: "60vh" }}
                     >
                       <pre className="whitespace-pre-wrap text-sm font-mono">
-                        <code>
+                        {/* <code>
                           {JSON.stringify(newAlgoCode)}
-                        </code>
+                        </code> */}
                       </pre>
                     </div>
                   </div>
