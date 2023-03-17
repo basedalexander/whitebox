@@ -1,0 +1,25 @@
+[
+    {
+        "name": "ExploreOnWeekends", 
+        "params": {
+            "weekStartsOn": "Friday",
+            "weekEndsOn": "Sunday",
+            "interests": [
+                "Longevity",
+                "SpaceTech",
+                "Web3 software developent"
+            ]
+        } 
+    },
+    {
+        "name": "ExploreOnWeekends2", 
+        "params": {
+            "weekStartsOn": "Thursday",
+            "weekEndsOn": "Sunday",
+            "interests": [
+                "SpaceTech",
+                "Web3 software developent"
+            ]
+        } 
+    }
+]

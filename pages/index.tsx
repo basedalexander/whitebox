@@ -2,10 +2,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { ethers } from 'ethers'
 import { client, exploreProfiles, authenticate, challenge } from '../api'
 import Link from 'next/link'
-import AlgoRegistryService from '../serivces/algo-registry/algoregistry.service';
+import AlgoRegistryService from '../services/algo-registry/algoregistry.service';
 
 export default function Home() {
   let algoRegistryService;

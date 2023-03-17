@@ -1,9 +1,11 @@
+import { deepCopy } from 'ethers/lib/utils';
 import { LocalStorageService } from '../local-storage.service';
+const appliedAlgoDataMock = require('./data-mocks/applied-algo-mock.json');
 
 // keeps algorithms, that are chosen by user and keeps parameter setting.
 export class AppliedAlgosService {
+    // @todo store all the parameters in local storage under namespace "whitebox". Example whitebox.algoname = {weekStartsOn: "Friday", ... }
     storageKey = 'whitebox';
-
 
     constructor() {
         this.localStorage = new LocalStorageService();
@@ -17,11 +19,15 @@ export class AppliedAlgosService {
         await this.eraseAppliedAlgoParams(algoName)
     }
 
+    // returns services/applied-algos/data-mocks/applied-algos-mock.json
     async getAppliedAlgos() {
-        const algos = this.localStorage.retrieve(storageKey);
-        return algos;1 
+        // @todo use localstorage
+        // const algos = this.localStorage.retrieve(storageKey);
+        const algos = JSON.parse(JSON.stringify(appliedAlgoDataMock));
+        return algos;
     }
 
+    // use format: serivces/applied-algos/data-mocks/applied-algos-mock.json
     async persistAppliedAlgoParams(algoName, paramsObject) {
         this.localStorage.save(algoName, paramsObject);
     }

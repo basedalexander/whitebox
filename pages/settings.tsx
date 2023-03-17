@@ -2,10 +2,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { client, exploreProfiles } from "../api";
-import Link from "next/link";
 
 export default function Settings() {
+  
   // 1. Fetch all algo names from AlgoRegistryServices.getAll()
   // 2. Fetch each algo by names and store them into an array "algorithms"
   // 3. Use AppliedAlgosService to get names of algorithms that were selected by user in settings
@@ -13,14 +12,21 @@ export default function Settings() {
   // 5. Render list of applied algorithms
   // 6. On algo select - it should render interface into interface and code into code component
 
-  const [profiles, setProfiles] = useState<any>([]);
+  const [algos, setAlgos] = useState<any>([]); // array of serivces/algo-registry/data-mocks/get-algorithm-data-mock.json
+  const [appliedAlgos, setAppliedAlgos] = useState<any>([]);
   
   useEffect(() => {
-    fetchProfiles();
+    fetchAlgos()
+    fetchAppliedAlgos()
   }, []);
 
-  async function fetchProfiles() {}
-
+  async function fetchAlgos() {
+    setAlgos([]);
+  }
+  async function fetchAppliedAlgos() {
+    setAppliedAlgos([]);
+  }
+  
   return (
     <div className="pt-20" style={{ whiteSpace: "nowrap", display: "flex" }}>
       <div style={{ display: "flex" }}>
