@@ -54,6 +54,12 @@ export default function Settings() {
     await appliedAlgosService.addAlgo(selectedAlgoName, paramsToSave);
     console.log('params saved');
   }
+
+  async function onAlgoClick() {
+    // 1. save selected algo name into variable selectedAlgoName
+    // 2. Render the insides of the algo into parameters and code components
+    console.log('algo click');
+  }
   
   return (
     <div className="pt-20" style={{ whiteSpace: "nowrap", display: "flex" }}>
@@ -66,32 +72,12 @@ export default function Settings() {
               <header className="text-black text-xl font-bold w-min">
                 Feed
               </header>
-              <div className="ml-2 p-1 hover:text-violet-700 truncate w-min">
-                DeFi Junk shitposters filter
+              <div>
+              { algos.map(algo => (
+              <div onClick={onAlgoClick} className="ml-2 p-1 hover:text-violet-700 truncate w-min">
+                {algo.name}
               </div>
-              <div className="ml-2 p-1 hover:text-violet-700 truncate w-min">
-                Exploring on weekends
-              </div>
-              <div className="ml-2 p-1 hover:text-violet-700 truncate w-min">
-                Suggest opposite view content
-              </div>
-              <div className="ml-2 p-1 hover:text-violet-700 truncate w-min">
-                Engagement bait Filter
-              </div>
-              <button className="inline-block mt-5 ml-10 rounded-full border-2 border-neutral-800 px-3 pt-1 pb-[3px] text-xs font-medium uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:border-neutral-800 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-neutral-800 focus:border-neutral-800 focus:text-neutral-800 focus:outline-none focus:ring-0 active:border-neutral-900 active:text-neutral-900 dark:border-neutral-900 dark:text-neutral-900 dark:hover:border-neutral-900 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10 dark:hover:text-neutral-900 dark:focus:border-neutral-900 dark:focus:text-neutral-900 dark:active:border-neutral-900 dark:active:text-neutral-900">
-                Add algo
-              </button>
-              <header className="text-black text-xl font-bold mt-14 w-min">
-                Connections
-              </header>
-              <div className="ml-2 p-1 hover:text-violet-700 truncate w-min">
-                Recommend UX designers in web3
-              </div>
-              <div className="ml-2 p-1 hover:text-violet-700 truncate w-min">
-                Avoid shitposters
-              </div>
-              <div className="ml-2 p-1 hover:text-violet-700 truncate w-min">
-                Longevity thought leaders
+                ))}
               </div>
               <button className="inline-block mt-5 ml-10 rounded-full border-2 border-neutral-800 px-3 pt-1 pb-[3px] text-xs font-medium uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:border-neutral-800 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-neutral-800 focus:border-neutral-800 focus:text-neutral-800 focus:outline-none focus:ring-0 active:border-neutral-900 active:text-neutral-900 dark:border-neutral-900 dark:text-neutral-900 dark:hover:border-neutral-900 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10 dark:hover:text-neutral-900 dark:focus:border-neutral-900 dark:focus:text-neutral-900 dark:active:border-neutral-900 dark:active:text-neutral-900">
                 Add algo
