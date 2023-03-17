@@ -26,15 +26,13 @@ export default function Settings() {
   }, []);
 
   async function init() {
-    const names = await algoRegistryService.getNames();
-    const algos = await algoRegistryService.getMany(names);
-    setAlgos(algos);
-
     // @todo get applied alogs and save them into appliedAlgos
   }
 
   async function fetchAlgos() {
-    setAlgos([]);
+    const names = await algoRegistryService.getNames();
+    const algos = await algoRegistryService.getMany(names);
+    setAlgos(algos);;
   }
   async function fetchAppliedAlgos() {
     setAppliedAlgos([]);
