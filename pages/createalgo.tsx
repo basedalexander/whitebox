@@ -57,11 +57,9 @@ const defaultAlgoObj = {
           ]
       },
       "version": "1.0",
-      "code": "{ ... }"
+      "code": "{ }"
   }
 }
-
-const newObj = JSON.parse(JSON.stringify(defaultAlgoObj));
 
 export default function Createalgo() {
   // 1. Fetch all algo names from AlgoRegistryServices.getAll()
@@ -82,12 +80,12 @@ export default function Createalgo() {
   const [newAlgoCode, setNewAlgoCode] = useState<any>(defaultAlgoObj.md.code);
   
   const newAlgoObj = useMemo(() => {
-    setNewAlgoName(defaultAlgoObj.name);
-    setNewAlgoDescription(defaultAlgoObj.description);
-    setNewAlgoVersion(defaultAlgoObj.md.version);
-    setNewAlgoInstruction(defaultAlgoObj.md.instruction);
-    setNewAlgoParams(defaultAlgoObj.md.interface.parameters);
-    setNewAlgoCode(defaultAlgoObj.md.code);
+    // setNewAlgoName(defaultAlgoObj.name);
+    // setNewAlgoDescription(defaultAlgoObj.description);
+    // setNewAlgoVersion(defaultAlgoObj.md.version);
+    // setNewAlgoInstruction(defaultAlgoObj.md.instruction);
+    // setNewAlgoParams(defaultAlgoObj.md.interface.parameters);
+    // setNewAlgoCode(defaultAlgoObj.md.code);
 
     return {
       name: newAlgoName,
@@ -139,27 +137,6 @@ export default function Createalgo() {
 
   const { write } = useContractWrite(config);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    switch (name) {
-      case 'name':
-        setNewAlgoName(value);
-        break;
-      case 'description':
-        newObj.description = e.target.value;
-        console.log('description change', e.target.value)
-        break;
-      case 'version':
-        setNewAlgoVersion(value);
-        break;
-      case 'instruction':
-        setNewAlgoInstruction(value);
-        break;
-      default:
-        break;
-    }
-  }
-
   return (
     <div className="pt-20" style={{ whiteSpace: "nowrap", display: "flex" }}>
       <div style={{ display: "flex" }}>
@@ -175,29 +152,29 @@ export default function Createalgo() {
               <hr />
               
               <div>
-                <input name='name' type="text" value={defaultAlgoObj.name} onChange={handleInputChange} />
+                <input name='name' type="text" defaultValue={defaultAlgoObj.name} onChange={(e) => setNewAlgoName(e.target.value)} />
                 <p>Name</p>
               </div>
 
               <hr />
 
               <div>
-                <input name='description' type="text" value={defaultAlgoObj.name} onChange={handleInputChange} />
+                <input name='description' type="text" defaultValue={defaultAlgoObj.description} onChange={(e) => setNewAlgoDescription(e.target.value)} />
                 <p>Description:</p>
               </div>
-{/* 
+
               <hr />
 
               <div>
-                <input name='version' type="text" placeholder={defaultAlgoObj.md.version} onChange={handleInputChange} />
+                <input name='version' type="text" defaultValue={defaultAlgoObj.md.version} onChange={(e) => setNewAlgoVersion(e.target.value)} />
                 <p>Version:</p>
               </div>
 
               <hr />
               <div>
-                <input name='instruction' type="text" placeholder={defaultAlgoObj.md.instruction} onChange={handleInputChange} />
+                <input name='instruction' type="text" defaultValue={defaultAlgoObj.md.instruction} onChange={(e) => setNewAlgoInstruction(e.target.value)} />
                 <p>Instruction:</p>
-              </div> */}
+              </div>
 
               <hr />
 
