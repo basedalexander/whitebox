@@ -40,39 +40,23 @@ export default function Createalgo() {
   // 6. On algo select - it should render interface into interface and code into code component
 
   const [algos, setAlgos] = useState<any>([]); // array of serivces/algo-registry/data-mocks/get-algorithm-data-mock.json
-  const [appliedAlgos, setAppliedAlgos] = useState<any>([]);
-  const selectedAlgoName = ''; // used to identify a selected algo in the list
+  const [createdAlgoObj, setCreatedAlgoObj] = useState<any>([]); // serivces/algo-registry/data-mocks/get-algorithm-data-mock.json
   
   useEffect(() => {
-    fetchAlgos()
     init()
   }, []);
 
   async function init() {
-    // @todo get applied alogs and save them into appliedAlgos
-    // filter out algos that are not applied
-    // marge applied algo parameter values into algo.md.interface.parameters fields under field value for each param.
-    // display all that.
-  }
 
-  async function fetchAlgos() {
-    const names = await algoRegistryService.getNames();
-    const algos = await algoRegistryService.getMany(names);
-    console.log('algos loaded');
-    console.log(algos);
-    setAlgos(algos);;
   }
 
   async function onParamsSave() {
-    // 1. todo save them under the algo object in md.interface.parameters
     const paramsToSave = {};
     console.log('params saved');
   }
 
-  async function onAlgoClick() {
-    // 1. save selected algo name into variable selectedAlgoName
-    // 2. Render the insides of the algo into parameters and code components
-    console.log('algo click');
+  async function onCreateClick() {
+    // construct prepare algo object and register in in algoRegistryService.
   }
   
   return (
@@ -88,7 +72,7 @@ export default function Createalgo() {
               </header>
               <div>
                 Name: 
-                <input value='test-algo' type="text" />
+                <input type="text" />
               </div>
               <div>
                 Description: 
