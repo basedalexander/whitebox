@@ -80,14 +80,8 @@ export default function Createalgo() {
   const [newAlgoCode, setNewAlgoCode] = useState<any>(defaultAlgoObj.md.code);
   
   const newAlgoObj = useMemo(() => {
-    // setNewAlgoName(defaultAlgoObj.name);
-    // setNewAlgoDescription(defaultAlgoObj.description);
-    // setNewAlgoVersion(defaultAlgoObj.md.version);
-    // setNewAlgoInstruction(defaultAlgoObj.md.instruction);
-    // setNewAlgoParams(defaultAlgoObj.md.interface.parameters);
-    // setNewAlgoCode(defaultAlgoObj.md.code);
-
     return {
+      author: "0x8D60843A8B19c97375d1d67da1AC9049dDd807DC",
       name: newAlgoName,
       description: newAlgoDescription,
       md: {
