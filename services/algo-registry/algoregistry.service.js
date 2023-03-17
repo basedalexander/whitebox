@@ -9,7 +9,7 @@ export default class AlgoRegistryService {
         this.ipfs = new IPFSService();
     }
 
-    async getAll() {
+    async getNames() {
         // gets all the algorithm names that are already in the registry.
         return ['Exploration of weekends v.1', 'Exploration of weekends v.2'];
     }
@@ -19,9 +19,9 @@ export default class AlgoRegistryService {
     async get(name) {
         const algoData = deepCopy(getAlgoDataMock);
         algoData.name = name;
-        algoData.md.code = algoCodeMock;
+        algoData.md.code = algoCodeMock.default;
         // gets one algorithm data by name
-        return mockAlgorialgoDatahmData;
+        return algoData;
     }
 
     async getMany(names) {

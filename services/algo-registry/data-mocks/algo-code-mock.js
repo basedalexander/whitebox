@@ -1,4 +1,4 @@
-export const algoMockCode = `
+const algoMockCode = `
 query Publications($id: ProfileId!, $limit: LimitScalar) {
   publications(request: {
     profileId: $id,
@@ -23,3 +23,5 @@ fragment MetadataOutputFields on MetadataOutput {
   content
 }
 `;
+
+export default algoMockCode;

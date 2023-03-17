@@ -2,8 +2,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import AlgoRegistryService from '../services/algo-registry/algoregistry.service';
 
 export default function Settings() {
+
+  let algoRegistryService = new AlgoRegistryService();
   
   // 1. Fetch all algo names from AlgoRegistryServices.getAll()
   // 2. Fetch each algo by names and store them into an array "algorithms"
@@ -15,10 +18,20 @@ export default function Settings() {
   const [algos, setAlgos] = useState<any>([]); // array of serivces/algo-registry/data-mocks/get-algorithm-data-mock.json
   const [appliedAlgos, setAppliedAlgos] = useState<any>([]);
   
+  
   useEffect(() => {
     fetchAlgos()
     fetchAppliedAlgos()
+    init()
   }, []);
+
+  async function init() {
+    const names = await algoRegistryService.getNames();
+    const algos = await algoRegistryService.getMany(names);
+    setAlgos(algos);
+
+    // @todo get applied alogs and save them into appliedAlgos
+  }
 
   async function fetchAlgos() {
     setAlgos([]);

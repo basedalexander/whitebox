@@ -4,10 +4,8 @@
 import { useEffect, useState } from 'react'
 import { client, exploreProfiles, authenticate, challenge } from '../api'
 import Link from 'next/link'
-import AlgoRegistryService from '../services/algo-registry/algoregistry.service';
 
 export default function Home() {
-  let algoRegistryService;
 
   /* create initial state to hold array of profiles */
   const [profiles, setProfiles] = useState<any>([])
@@ -18,9 +16,7 @@ export default function Home() {
   }, [])
 
   async function init() {
-    algoRegistryService = new AlgoRegistryService();
-    const names = await algoRegistryService.getAll();
-    console.log(names);
+
   }
 
   async function fetchProfiles() {
