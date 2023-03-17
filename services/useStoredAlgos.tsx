@@ -27,8 +27,7 @@ export default () => {
           return algosData;
         }
       );
-      // console.log(algosDataFromIpsf);
 
-      return algosDataFromIpsf
+      return [algosDataFromIpsf, authorizedAlgos]
 }
 

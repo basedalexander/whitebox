@@ -19,12 +19,16 @@ export default function Settings() {
 
   }, []);
 
-  const storedAlgos = useStoredAlgos();
+  const [storedAlgos, algoHashes] = useStoredAlgos();
   if (storedAlgos) {
     console.log(storedAlgos);
   }
   
   const processedAlgos = useMemo(() => {
+    storedAlgos?.forEach((algo, index) => {
+      algo.hash = algoHashes?.[index];
+    });
+
     const res = filterBrokenAlgos(storedAlgos)
     return res
   }, [storedAlgos])
