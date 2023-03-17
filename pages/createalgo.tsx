@@ -116,12 +116,26 @@ export default function Createalgo() {
 
 
   function onParamsChangeHandler(e) {
-
+    const valueStr = e.target.value;
+    let result;
+    try {
+      result = JSON.parse(valueStr);
+    } catch (e) {
+      throw new Error(`error updating params`);
+    }
+    setNewAlgoParams(result);
   }
 
 
   function onCodeChangeHandler(e) { 
-
+    const valueStr = e.target.value;
+    let result;
+    try {
+      result = JSON.parse(valueStr);
+    } catch (e) {
+      throw new Error(`error updating code`);
+    }
+    setNewAlgoCode(result);
   }
 
 
