@@ -21,9 +21,18 @@ export default function Home() {
   }, [])
 
   async function init() {
-    // 1. Download all algos
-    // 2. Get Applied algos
-    // 3. Query the feed using algorithms 
+    
+    // Get applied algorithms md and parameters.
+    // 1. Get Applied algos and their parameters
+    // 2. Download only algos by name, they can be cashed in AppliedAlgos service.
+
+    // Prototype query
+    // 1. Get publication from all accounts that "handle" follows
+
+
+    // build query
+    // 2. Build query based on the code and the parameters of the algorithms
+    // 3. Refresh the feed with that query.
     await refreshFeed();
   }
 
