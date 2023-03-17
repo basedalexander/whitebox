@@ -124,11 +124,11 @@ export default function Createalgo() {
   // console.log(ipfsHash);
 
   const saveIpfsHash = useCallback(async () => {
-    console.log(newObj);
-    // const val = JSON.stringify(newAlgoObj);
-    // console.log("saving data: ", val);
-    // const { cid } = await client.add(val);
-    // return setIpfsHash(cid.toString());
+    console.log(newAlgoObj);
+    const val = JSON.stringify(newAlgoObj);
+    console.log("saving data: ", val);
+    const { cid } = await client.add(val);
+    return setIpfsHash(cid.toString());
   }, [newAlgoObj]);
 
   const { config } = usePrepareContractWrite({
@@ -215,10 +215,10 @@ export default function Createalgo() {
                     <h1 className="text-lg font-bold">Parameters</h1>
                   </div>
                   <div
-                    className="flex-grow overflow-auto"
+                    className="flex-grow overflow-auto h-full"
                     style={{ maxHeight: "60vh" }}
                   >
-                    {/* <code>{JSON.stringify(newAlgoParams)}</code> */}
+                    <textarea className="w-full h-96" defaultValue={ newAlgoParams ? JSON.stringify(newAlgoParams, null, 4):  "" }></textarea>
                   </div>
                 </div>
               </div>
@@ -239,13 +239,12 @@ export default function Createalgo() {
                 <div className="flex flex-col space-y-4 p-4">
                   <div className="bg-white border rounded-lg shadow-md p-4">
                     <div
-                      className="flex-grow overflow-auto"
+                      className="flex-grow overflow-auto h-full"
                       style={{ maxHeight: "60vh" }}
                     >
                       <pre className="whitespace-pre-wrap text-sm font-mono">
-                        {/* <code>
-                          {JSON.stringify(newAlgoCode)}
-                        </code> */}
+                        <textarea className="w-full h-96" defaultValue={ newAlgoCode? JSON.stringify(newAlgoCode, null, 4): "" }>
+                        </textarea>
                       </pre>
                     </div>
                   </div>

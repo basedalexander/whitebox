@@ -7,42 +7,6 @@ import useStoredAlgos from "@/services/useStoredAlgos";
 import { filterBrokenAlgos } from '../services/algos-utils'
 import LocalStorageService from "@/services/local-storage.service";
 
-const parametersMock = {
-  weekStartsOn: {
-    type: "string",
-    value: "Friday",
-    acceptedValues: [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday",
-    ],
-    description: "the beginning of a week",
-  },
-  weekEndsOn: {
-    type: "string",
-    value: "Sunday",
-    acceptedValues: [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday",
-    ],
-    description: "the beginning of a week",
-  },
-  interests: {
-    type: "string[]",
-    value: [],
-    description: "List of topics you are interested in",
-  },
-};
-
 export default function Settings() {
   let localStorageService = new LocalStorageService();
 
