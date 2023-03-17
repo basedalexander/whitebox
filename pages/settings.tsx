@@ -6,11 +6,19 @@ import { client, exploreProfiles } from "../api";
 import Link from "next/link";
 
 export default function Settings() {
-  /* create initial state to hold array of profiles */
+  // 1. Fetch all algo names from AlgoRegistryServices.getAll()
+  // 2. Fetch each algo by names and store them into an array "algorithms"
+  // 3. Use AppliedAlgosService to get names of algorithms that were selected by user in settings
+  // 4. Also use the same service to get stored parameter values.
+  // 5. Render list of applied algorithms
+  // 6. On algo select - it should render interface into interface and code into code component
+
   const [profiles, setProfiles] = useState<any>([]);
+  
   useEffect(() => {
     fetchProfiles();
   }, []);
+
   async function fetchProfiles() {}
 
   return (
