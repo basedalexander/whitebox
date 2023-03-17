@@ -5,6 +5,30 @@ import { useEffect, useState } from "react";
 import AlgoRegistryService from '../services/algo-registry/algoregistry.service';
 import { AppliedAlgosService } from '../services/applied-algos/applied-algos.service';
 
+const parametersMock = {
+  "weekStartsOn": {
+      "type": "string",
+      "value": "Friday",
+      "acceptedValues": [
+          "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+      ],
+      "description": "the beginning of a week"
+  },
+  "weekEndsOn": {
+      "type": "string",
+      "value": "Sunday",
+      "acceptedValues": [
+          "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+      ],
+      "description": "the beginning of a week"
+  },
+  "interests": {
+      "type": "string[]",
+      "value": [],
+      "description": "List of topics you are interested in"
+  }
+};
+
 export default function Settings() {
 
   let algoRegistryService = new AlgoRegistryService();
@@ -100,34 +124,9 @@ export default function Settings() {
                     className="flex-grow overflow-auto"
                     style={{ maxHeight: "60vh" }}
                   >
-                    <div className="p-4">Weekend starts on: Friday</div>
-                    <div className="p-4">Weekend ends on: Sunday</div>
-                    <div className="p-4">Topics to explore:</div>
-                    <div className="flex flex-col space-y-4 p-4">
-                      <div className="bg-white border rounded-lg shadow-md p-4">
-                        <h2 className="text-lg font-bold mb-2">Longevity</h2>
-                      </div>
-                      <div className="bg-white border rounded-lg shadow-md p-4">
-                        <h2 className="text-lg font-bold mb-2">Space Tech</h2>
-                      </div>
-                      <div className="bg-white border rounded-lg shadow-md p-4">
-                        <h2 className="text-lg font-bold mb-2">
-                          Web3 software development
-                        </h2>
-                      </div>
-                      <div className="bg-white border rounded-lg shadow-md p-4">
-                        <h2 className="text-lg font-bold mb-2">Topic 4</h2>
-                      </div>
-                      <div className="bg-white border rounded-lg shadow-md p-4">
-                        <h2 className="text-lg font-bold mb-2">Topic 5</h2>
-                      </div>
-                      <div className="bg-white border rounded-lg shadow-md p-4">
-                        <h2 className="text-lg font-bold mb-2">Topic 6</h2>
-                      </div>
-                      <div className="bg-white border rounded-lg shadow-md p-4">
-                        <h2 className="text-lg font-bold mb-2">Topic 7</h2>
-                      </div>
-                    </div>
+                    <code>
+                      {JSON.stringify(parametersMock)}
+                    </code>
                   </div>
                 </div>
               </div>
