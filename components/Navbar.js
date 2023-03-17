@@ -3,10 +3,10 @@ import Webconnect from './Webconnect';
 
 const Navbar = () => {
     return (
-        <nav class='nav-container'>
-            <div class='nav-item'><Link href="/" >Home</Link></div>
-            <div class='nav-item'><Link href="/settings">Settings</Link></div>
-            <div class='connectwallet-menu-item'><Webconnect /></div>
+        <nav className='nav-container'>
+            <div className='nav-item'><Link href="/" >Home</Link></div>
+            <div className='nav-item'><Link href="/settings">Settings</Link></div>
+            <div className='connectwallet-menu-item'><Webconnect /></div>
         </nav>
     )
 }
