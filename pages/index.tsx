@@ -75,9 +75,10 @@ export default function Home() {
   return (
     <div className="pt-20">
       <div>
+
       <div className="ml-10 w-min">
               <header className="text-black text-xl font-bold">
-                Select Algo
+                Tap feed algo:
               </header>
               <div>
                 {processedAlgos?.map((algo, index) => (

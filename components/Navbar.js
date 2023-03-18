@@ -10,6 +10,12 @@ const Navbar = () => {
         justifyContent: "space-around"
       }}
     >
+    <div className="whitebox-logo">
+      <img className='whitebox-logo' src="box.jpg" alt="Logo" />
+    </div>
+    <div className='white-box-title'>whitebox demo</div>
+
+
       <div className="nav-item">
         <Link href="/">Home</Link>
       </div>
