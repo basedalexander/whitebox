@@ -7,7 +7,7 @@ const Navbar = () => {
       style={{
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-around",
+        justifyContent: "space-around"
       }}
     >
       <div className="nav-item">

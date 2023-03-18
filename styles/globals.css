@@ -6,6 +6,7 @@
     /* display: flex; */
     border-bottom: 1px solid #ccc;
     display: block;
+    align-items: center
 }
 
 .menu-item {
@@ -19,4 +20,9 @@
 .connectwallet-menu-item {
     /* flex-grow: 0; */
     float:right;
+}
+
+.pub-post {
+    border: 2px solid black;
+    border-radius: 5px;
 }

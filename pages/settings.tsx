@@ -15,7 +15,7 @@ export default function Settings() {
 
   useEffect(() => {
     localStorageService.init();
-  setSelectedAlgoIndex(0);
+    setSelectedAlgoIndex(0);
 
   }, []);
 
@@ -39,6 +39,7 @@ export default function Settings() {
   }
 
   async function onParamsSave() {
+    console.log('params save');
     console.log(processedAlgos[selectedAlgoIndex].md.interface.parameters);
   }
 
@@ -56,7 +57,7 @@ export default function Settings() {
             {/* Div Feed and Connections  */}
             <div className="ml-10 w-min">
               <header className="text-black text-xl font-bold w-min">
-                All feed algos available
+                Feed Algorithms
               </header>
               <div>
                 {processedAlgos?.map((algo, index) => (

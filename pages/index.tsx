@@ -108,7 +108,7 @@ export default function Home() {
         <div className="flex flex-col items-center justify-cente w-2/5 mx-auto mt-10  rounded-xl ">
         {
               publications.map(pub => (
-                <div key={pub.id} className='shadow p-10 rounded mb-8 w-2/3'>
+                <div key={pub.id} className='shadow p-10 rounded mb-8 w-2/3 pub-post'>
                   <p>{pub.metadata.content}</p>
                 </div>
               ))
