@@ -10,9 +10,7 @@ const feedService = new FeedService();
 
 export default function Home() {
   const [publications, setPublications] = useState<any>([])
-  const defaultHandle = 'stani.lens';
   const [selectedAlgoIndex, setSelectedAlgoIndex] = useState<any>(0);
-
 
   useEffect(() => {
     init();
@@ -22,7 +20,7 @@ export default function Home() {
   // ======= this mess is to fetch and transfortm algos data to render.
   const [storedAlgos, algoHashes] = useStoredAlgos();
   if (storedAlgos) {
-    console.log('fetched algost from contract')
+    console.log('fetched raw algorithms from contract')
     console.log(storedAlgos);
   }
   

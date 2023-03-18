@@ -5,16 +5,21 @@ const defaultHandle = 'stani.lens';
 
 export default class  FeedService {
     async getPublications(user, inputData, algorithmData) {
-        const profileData = await this._fetchProfile(defaultHandle);
+        if (!algorithmData) {
+            return [];
+        }
+
+        const handledData = await this._handleAlgoData(algorithmData);
+        const profileData = await this._fetchProfile(handledData);
         const publications = await this._fetchPubs(profileData);
         const feedItems = publications.data.publications.items;
         return feedItems;
     }
 
-    async _fetchProfile(handle) {
+    async _fetchProfile(fetchProfileData) {
         const returnedProfile = await client.query({
           query: getProfile,
-          variables: { handle }
+          variables: { handle: fetchProfileData }
         })
         const profileData = { ...returnedProfile.data.profile }
         /* format their picture if it is not in the right format */
@@ -28,18 +33,29 @@ export default class  FeedService {
           }
         }
         
-        console.log(`profile ${handle} fetched`);
+        console.log(`profile ${fetchProfileData} fetched`);
         console.log(profileData);
     
         return profileData;
       }
 
-      async _fetchPubs(profileData) {
+      async _handleAlgoData(algorithmData) {
+        let result = 'kozlovchad.lens'
+        if (algorithmData.hash === "QmUCx569wi9N8QsiXghEPTiZEYCuVxWCLDz3kD3mjSK1eF") {
+            result = 'stani.lens'
+        } else if (algorithmData.hash === "QmYuTit2sL8TKAurJav7mooKukphcpXoRNYASg1nvgoKxW") {
+            result = 'sasicodes.lens'
+        }
+
+        return result;
+      }
+
+      async _fetchPubs(fetchData) {
         try {
           const result = await client.query({
             query: getPublications,
             variables: {
-                id: profileData.id, limit: 50
+                id: fetchData.id, limit: 50
             }
           })
     
@@ -48,7 +64,7 @@ export default class  FeedService {
     
           return result;
         } catch(e) {
-          console.error(`error downloading publication for ${profileData.handle} \n ${e}`);
+          console.error(`error downloading publication for ${fetchData.handle} \n ${e}`);
         }
       }
 }
