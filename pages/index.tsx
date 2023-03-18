@@ -66,8 +66,9 @@ export default function Home() {
     console.log('refresh executed');
   }
 
-  function onAlgoClick(index) {
+  async function onAlgoClick(index) {
     setSelectedAlgoIndex(index);
+    await refreshFeed();
     console.log("algo click index ", index);
   }
 
@@ -75,7 +76,7 @@ export default function Home() {
     <div className="pt-20">
       <div>
       <div className="ml-10 w-min">
-              <header className="text-black text-xl font-bold w-min">
+              <header className="text-black text-xl font-bold">
                 Select Algo
               </header>
               <div>
@@ -92,16 +93,16 @@ export default function Home() {
       </div>
 
       <div>
+      <div className="flex flex-col justify-center items-center">
+  <input
+    type="text"
+    placeholder="What's new?"
+    className="border-teal-700 w-96 rounded shadow-lg"
+    style={{ paddingLeft: '10px', paddingRight: '20px', fontSize: '1.2rem' }}
+  />
+</div>
         <div className="flex flex-col justify-center items-center ">
-        <input
-          type="text"
-          placeholder="What's new?"
-          className="border-teal-700 w-96 rounded"
-          style={{ paddingLeft: '10px', paddingRight: '20px' }}
-        />
-        </div>
-        <div className="flex flex-col justify-center items-center ">
-          <button onClick={handleRefresh}>REFRESH</button>
+          <button onClick={handleRefresh} className="inline-block mt-5 ml-10 rounded-full border-2 border-neutral-800 px-3 pt-1 pb-[3px] text-xs font-medium uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:border-neutral-800 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-neutral-800 focus:border-neutral-800 focus:text-neutral-800 focus:outline-none focus:ring-0 active:border-neutral-900 active:text-neutral-900 dark:border-neutral-900 dark:text-neutral-900 dark:hover:border-neutral-900 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10 dark:hover:text-neutral-900 dark:focus:border-neutral-900 dark:focus:text-neutral-900 dark:active:border-neutral-900 dark:active:text-neutral-900">REFRESH</button>
         </div>
 
         <div className="flex flex-col items-center justify-cente w-2/5 mx-auto mt-10  rounded-xl ">
