@@ -12,10 +12,9 @@ import useStoredAlgos from "@/services/useStoredAlgos";
 
 
 export default function Home() {
-  const [profiles, setProfiles] = useState<any>([])
   const [publications, setPublications] = useState<any>([])
   const defaultHandle = 'stani.lens';
-  const [selectedAlgoIndex, setSelectedAlgoIndex] = useState<any>([]);
+  const [selectedAlgoIndex, setSelectedAlgoIndex] = useState<any>(0);
 
 
   useEffect(() => {
