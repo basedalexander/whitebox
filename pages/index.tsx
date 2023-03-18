@@ -2,7 +2,6 @@
 'use client'
 
 import { useEffect, useState, useMemo } from 'react'
-import { replaceValues } from '@/services/utils/utils'
 import { filterBrokenAlgos } from '../services/algos-utils'
 import useStoredAlgos from "@/services/useStoredAlgos";
 import FeedService from '@/services/feed/feed-service'
@@ -23,6 +22,7 @@ export default function Home() {
   // ======= this mess is to fetch and transfortm algos data to render.
   const [storedAlgos, algoHashes] = useStoredAlgos();
   if (storedAlgos) {
+    console.log('fetched algost from contract')
     console.log(storedAlgos);
   }
   
@@ -35,7 +35,7 @@ export default function Home() {
   }, [storedAlgos])
 
   if (processedAlgos) {
-    console.log('processed algos');
+    console.log('algorithms have been processed');
     console.log(processedAlgos)
   }
   // ===== mess ends
@@ -45,9 +45,22 @@ export default function Home() {
   }
 
   async function refreshFeed() {
-      const feedItems = await feedService.getPublications(defaultHandle, [], {}, '');
+      let currentAlgo;
+      if (processedAlgos) { currentAlgo = processedAlgos[selectedAlgoIndex]; }
+      const userData = await getUserData();
+      const user = await getCurrentUser();
+
+      const feedItems = await feedService.getPublications(user, userData, currentAlgo);
       setPublications(feedItems);
       console.log('feed refreshed');
+  }
+
+  async function getUserData() {
+    return [];  // mock for now
+  }
+
+  async function getCurrentUser() {
+    return '0x8D60843A8B19c97375d1d67da1AC9049dDd807DC';
   }
 
   // async function fetchProfile(handle) {

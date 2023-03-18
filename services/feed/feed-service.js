@@ -4,7 +4,7 @@ const defaultHandle = 'stani.lens';
 
 
 export default class  FeedService {
-    async getPublications(user, inputData, params, code) {
+    async getPublications(user, inputData, algorithmData) {
         const profileData = await this._fetchProfile(defaultHandle);
         const publications = await this._fetchPubs(profileData);
         const feedItems = publications.data.publications.items;
