@@ -2,14 +2,12 @@
 'use client'
 
 import { useEffect, useState, useMemo } from 'react'
-import { gql, ApolloClient } from '@apollo/client'
-import { client, exploreProfiles, getProfile, getPublications } from '../api'
 import { replaceValues } from '@/services/utils/utils'
 import { filterBrokenAlgos } from '../services/algos-utils'
 import useStoredAlgos from "@/services/useStoredAlgos";
+import FeedService from '@/services/feed/feed-service'
 
-
-
+const feedService = new FeedService();
 
 export default function Home() {
   const [publications, setPublications] = useState<any>([])
@@ -47,53 +45,51 @@ export default function Home() {
   }
 
   async function refreshFeed() {
-      const profileData = await fetchProfile(defaultHandle);
-      const publications: any = await fetchPubs(profileData);
-      const feedItems = publications.data.publications.items;
+      const feedItems = await feedService.getPublications(defaultHandle, [], {}, '');
       setPublications(feedItems);
       console.log('feed refreshed');
   }
 
-  async function fetchProfile(handle) {
-    const returnedProfile = await client.query({
-      query: getProfile,
-      variables: { handle }
-    })
-    const profileData = { ...returnedProfile.data.profile }
-    /* format their picture if it is not in the right format */
-    const picture = profileData.picture
-    if (picture && picture.original && picture.original.url) {
-      if (picture.original.url.startsWith('ipfs://')) {
-        let result = picture.original.url.substring(7, picture.original.url.length)
-        profileData.avatarUrl = `http://lens.infura-ipfs.io/ipfs/${result}`
-      } else {
-        profileData.avatarUrl = profileData.picture.original.url
-      }
-    }
+  // async function fetchProfile(handle) {
+  //   const returnedProfile = await client.query({
+  //     query: getProfile,
+  //     variables: { handle }
+  //   })
+  //   const profileData = { ...returnedProfile.data.profile }
+  //   /* format their picture if it is not in the right format */
+  //   const picture = profileData.picture
+  //   if (picture && picture.original && picture.original.url) {
+  //     if (picture.original.url.startsWith('ipfs://')) {
+  //       let result = picture.original.url.substring(7, picture.original.url.length)
+  //       profileData.avatarUrl = `http://lens.infura-ipfs.io/ipfs/${result}`
+  //     } else {
+  //       profileData.avatarUrl = profileData.picture.original.url
+  //     }
+  //   }
     
-    console.log(`profile ${handle} fetched`);
-    console.log(profileData);
+  //   console.log(`profile ${handle} fetched`);
+  //   console.log(profileData);
 
-    return profileData;
-  }
+  //   return profileData;
+  // }
   
-  async function fetchPubs(profileData) {
-    try {
-      const result = await client.query({
-        query: getPublications,
-        variables: {
-            id: profileData.id, limit: 50
-        }
-      })
+  // async function fetchPubs(profileData) {
+  //   try {
+  //     const result = await client.query({
+  //       query: getPublications,
+  //       variables: {
+  //           id: profileData.id, limit: 50
+  //       }
+  //     })
 
-      console.log('publications fetched');
-      console.log(result);
+  //     console.log('publications fetched');
+  //     console.log(result);
 
-      return result;
-    } catch(e) {
-      console.error(`error downloading publication for ${profileData.handle} \n ${e}`);
-    }
-  }
+  //     return result;
+  //   } catch(e) {
+  //     console.error(`error downloading publication for ${profileData.handle} \n ${e}`);
+  //   }
+  // }
   
   async function handleRefresh() {
     await refreshFeed();
