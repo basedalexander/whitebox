@@ -38,15 +38,10 @@ const defaultAlgoObj = {
               }
           ],
           "parameters": {
-              "parameterA": {
+              "parameterName": {
                   "type": "string",
                   "value": "web3",
-                  "description": "the beginning of a week"
-              },
-              "parameterB": {
-                  "type": "number",
-                  "value": 1,
-                  "description": "param B description"
+                  "description": "You interest in string"
               }
           },
           "output": [

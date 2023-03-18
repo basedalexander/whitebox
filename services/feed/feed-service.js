@@ -40,10 +40,10 @@ export default class  FeedService {
       }
 
       async _handleAlgoData(algorithmData) {
-        let result = 'kozlovchad.lens'
+        let result = 'yoginth.lens'
         if (algorithmData.hash === "QmUCx569wi9N8QsiXghEPTiZEYCuVxWCLDz3kD3mjSK1eF") {
-            result = 'stani.lens'
-        } else if (algorithmData.hash === "QmYuTit2sL8TKAurJav7mooKukphcpXoRNYASg1nvgoKxW") {
+            result = 'christina.lens'
+        } else if (algorithmData.hash === "QmQr2Sd1MeHVTSKz2na37kFQg4R45MhLc9yWxwhEMFWkY5") {
             result = 'sasicodes.lens'
         }
 
