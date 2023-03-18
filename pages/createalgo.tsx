@@ -130,8 +130,7 @@ export default function Createalgo() {
   useEffect(() => {
   }, []);
 
-  // console.log(ipfsHash);
-
+  // saves contract data to ipfs and stores hash  
   const saveIpfsHash = useCallback(async () => {
     console.log(newAlgoObj);
     const val = JSON.stringify(newAlgoObj);
@@ -147,6 +146,7 @@ export default function Createalgo() {
     args: [ipfsHash],
   });
 
+  // puts hash into algo object and registers it within the contract registry smart contract
   const { write } = useContractWrite(config);
 
   return (
@@ -245,9 +245,9 @@ export default function Createalgo() {
                   width: "100%",
                 }}
               >
-                <button onClick={saveIpfsHash}>[SAVE IPFS HASH]</button>
-                <button onClick={write} disabled={!ipfsHash}>
-                  [SAVE AND AUTHORIZE]
+                <button onClick={saveIpfsHash} className="inline-block mt-5 ml-10 rounded-full border-2 border-neutral-800 px-3 pt-1 pb-[3px] text-xs font-medium uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:border-neutral-800 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-neutral-800 focus:border-neutral-800 focus:text-neutral-800 focus:outline-none focus:ring-0 active:border-neutral-900 active:text-neutral-900 dark:border-neutral-900 dark:text-neutral-900 dark:hover:border-neutral-900 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10 dark:hover:text-neutral-900 dark:focus:border-neutral-900 dark:focus:text-neutral-900 dark:active:border-neutral-900 dark:active:text-neutral-900">PACK ALGO</button>
+                <button onClick={write} disabled={!ipfsHash} className="inline-block mt-5 ml-10 rounded-full border-2 border-neutral-800 px-3 pt-1 pb-[3px] text-xs font-medium uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:border-neutral-800 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-neutral-800 focus:border-neutral-800 focus:text-neutral-800 focus:outline-none focus:ring-0 active:border-neutral-900 active:text-neutral-900 dark:border-neutral-900 dark:text-neutral-900 dark:hover:border-neutral-900 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10 dark:hover:text-neutral-900 dark:focus:border-neutral-900 dark:focus:text-neutral-900 dark:active:border-neutral-900 dark:active:text-neutral-900">
+                  SEND TO REGISTRY
                 </button>
               </div>
             </div>
